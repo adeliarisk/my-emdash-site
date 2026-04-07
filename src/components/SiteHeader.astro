@@ -1,0 +1,450 @@
+---
+import LiveSearch from "emdash/ui/search";
+
+const isLoggedIn = !!Astro.locals.user;
+
+const services = [
+	{ label: "Virtual CISO", href: "/" },
+	{ label: "RIA Cybersecurity Services", href: "/pages/ria-cybersecurity-services" },
+	{ label: "CMMC / NIST 800-171 Consulting", href: "/" },
+	{ label: "Healthcare", href: "/" },
+	{ label: "Google Workspace Security Audit", href: "/" },
+	{ label: "Microsoft 365 Security Audit", href: "/" },
+];
+
+const resources = [
+	{ label: "Cybersecurity for RIAs and Investment Advisors", href: "/" },
+	{ label: "Small Business Cybersecurity Hub", href: "/" },
+	{ label: "Phishing", href: "/" },
+	{ label: "CMMC Level 2 Guide for SMB", href: "/" },
+];
+
+const phoneDisplay = "(888) 646-1616";
+const phoneHref = "tel:+18886461616";
+const logoUrl = "/_emdash/api/media/file/01KNN1B7PCKKGFP8NRX1QJJFWY.webp";
+---
+
+<header class="ar-header">
+	<div class="ar-header-inner">
+		<a href="/" class="ar-logo" aria-label="Adelia Risk home">
+			<img src={logoUrl} alt="Adelia Risk logo — cybersecurity and vCISO services" width="182" height="40" />
+		</a>
+
+		<nav class="ar-nav" aria-label="Primary">
+			<ul class="ar-nav-list">
+				<li class="ar-has-submenu">
+					<button type="button" class="ar-nav-link ar-submenu-trigger" aria-haspopup="true" aria-expanded="false">
+						Services
+						<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+							<path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+					<ul class="ar-submenu">
+						{services.map((s) => (
+							<li><a href={s.href}>{s.label}</a></li>
+						))}
+					</ul>
+				</li>
+				<li class="ar-has-submenu">
+					<button type="button" class="ar-nav-link ar-submenu-trigger" aria-haspopup="true" aria-expanded="false">
+						Resources
+						<svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+							<path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+					<ul class="ar-submenu">
+						{resources.map((r) => (
+							<li><a href={r.href}>{r.label}</a></li>
+						))}
+					</ul>
+				</li>
+				<li>
+					<a href="/posts" class="ar-nav-link">Blog</a>
+				</li>
+				<li>
+					<a href="/" class="ar-nav-link">About</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="ar-header-right">
+			<LiveSearch
+				placeholder="Search..."
+				class="ar-search"
+				inputClass="ar-search-input"
+				resultsClass="ar-search-results"
+				resultClass="ar-search-result"
+				collections={["posts", "pages"]}
+			/>
+			<a href={phoneHref} class="ar-cta-button">{phoneDisplay}</a>
+			{isLoggedIn && <a href="/_emdash/admin" class="ar-admin-link">Admin</a>}
+		</div>
+
+		<button type="button" class="ar-mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+			<span></span><span></span><span></span>
+		</button>
+	</div>
+</header>
+
+<script>
+	// Submenu hover/click for desktop, click for mobile
+	const triggers = document.querySelectorAll<HTMLButtonElement>(".ar-submenu-trigger");
+	triggers.forEach((trigger) => {
+		const parent = trigger.closest(".ar-has-submenu") as HTMLElement | null;
+		trigger.addEventListener("click", (e) => {
+			e.preventDefault();
+			const expanded = trigger.getAttribute("aria-expanded") === "true";
+			triggers.forEach((t) => {
+				if (t !== trigger) {
+					t.setAttribute("aria-expanded", "false");
+					t.closest(".ar-has-submenu")?.classList.remove("ar-open");
+				}
+			});
+			trigger.setAttribute("aria-expanded", String(!expanded));
+			parent?.classList.toggle("ar-open", !expanded);
+		});
+	});
+
+	// Close on outside click
+	document.addEventListener("click", (e) => {
+		const target = e.target as HTMLElement;
+		if (!target.closest(".ar-has-submenu")) {
+			triggers.forEach((t) => {
+				t.setAttribute("aria-expanded", "false");
+				t.closest(".ar-has-submenu")?.classList.remove("ar-open");
+			});
+		}
+	});
+
+	// Mobile menu toggle
+	const mobileToggle = document.querySelector<HTMLButtonElement>(".ar-mobile-toggle");
+	const header = document.querySelector<HTMLElement>(".ar-header");
+	mobileToggle?.addEventListener("click", () => {
+		const expanded = mobileToggle.getAttribute("aria-expanded") === "true";
+		mobileToggle.setAttribute("aria-expanded", String(!expanded));
+		header?.classList.toggle("ar-mobile-open", !expanded);
+	});
+</script>
+
+<style>
+	.ar-header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: #ffffff;
+		box-shadow: 0 1px 0 rgba(18, 38, 58, 0.06), 0 2px 12px rgba(18, 38, 58, 0.04);
+		font-family: var(--font-sans);
+	}
+
+	.ar-header-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+		padding: 14px 32px;
+		display: flex;
+		align-items: center;
+		gap: 32px;
+	}
+
+	.ar-logo {
+		display: block;
+		flex-shrink: 0;
+	}
+
+	.ar-logo img {
+		display: block;
+		height: 40px;
+		width: auto;
+	}
+
+	.ar-nav {
+		flex: 1;
+	}
+
+	.ar-nav-list {
+		display: flex;
+		align-items: center;
+		gap: 36px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.ar-nav-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-family: var(--font-sans);
+		font-size: 15px;
+		font-weight: 500;
+		color: #12263a;
+		text-decoration: none;
+		background: none;
+		border: none;
+		padding: 8px 0;
+		cursor: pointer;
+		transition: color 150ms ease;
+	}
+
+	.ar-nav-link:hover,
+	.ar-submenu-trigger[aria-expanded="true"] {
+		color: #354ff5;
+	}
+
+	.ar-has-submenu {
+		position: relative;
+	}
+
+	.ar-submenu {
+		position: absolute;
+		top: 100%;
+		left: -16px;
+		min-width: 280px;
+		background: #ffffff;
+		border-radius: 12px;
+		box-shadow: 0 12px 40px rgba(18, 38, 58, 0.18), 0 2px 8px rgba(18, 38, 58, 0.06);
+		padding: 12px;
+		margin: 0;
+		list-style: none;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(8px);
+		transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+		z-index: 200;
+	}
+
+	.ar-has-submenu:hover > .ar-submenu,
+	.ar-has-submenu.ar-open > .ar-submenu {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.ar-submenu li {
+		margin: 0;
+	}
+
+	.ar-submenu a {
+		display: block;
+		padding: 10px 14px;
+		font-size: 14px;
+		color: #12263a;
+		text-decoration: none;
+		border-radius: 8px;
+		transition: background 150ms ease, color 150ms ease;
+	}
+
+	.ar-submenu a:hover {
+		background: #f3f5ff;
+		color: #354ff5;
+	}
+
+	.ar-header-right {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		flex-shrink: 0;
+	}
+
+	.ar-search {
+		width: 180px;
+	}
+
+	:global(.ar-search-input) {
+		width: 100%;
+		padding: 8px 12px;
+		font-family: var(--font-sans);
+		font-size: 14px;
+		color: #12263a;
+		background: #f7f8fc;
+		border: 1px solid #e1e5f2;
+		border-radius: 8px;
+		transition: border-color 150ms ease, box-shadow 150ms ease;
+	}
+
+	:global(.ar-search-input)::placeholder {
+		color: #8a93a8;
+	}
+
+	:global(.ar-search-input):focus,
+	:global(.ar-search-input):focus-visible {
+		outline: none;
+		border-color: #354ff5;
+		box-shadow: 0 0 0 3px rgba(53, 79, 245, 0.2);
+		background: #ffffff;
+	}
+
+	:global(.ar-search-results) {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		margin-top: 8px;
+		background: #ffffff;
+		border: 1px solid #e1e5f2;
+		border-radius: 12px;
+		box-shadow: 0 12px 40px rgba(18, 38, 58, 0.18);
+		max-height: 400px;
+		overflow-y: auto;
+		z-index: 1000;
+	}
+
+	:global(.ar-search-result) {
+		display: block;
+		padding: 12px 16px;
+		font-size: 14px;
+		color: #12263a;
+		text-decoration: none;
+		border-bottom: 1px solid #f0f2f9;
+		transition: background 120ms ease;
+	}
+
+	:global(.ar-search-result):last-child {
+		border-bottom: none;
+	}
+
+	:global(.ar-search-result):hover,
+	:global(.ar-search-result.focused) {
+		background: #f3f5ff;
+	}
+
+	.ar-cta-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 12px 24px;
+		font-family: var(--font-sans);
+		font-size: 15px;
+		font-weight: 700;
+		color: #ffffff;
+		text-decoration: none;
+		background: linear-gradient(135deg, #354ff5 0%, #1c36df 100%);
+		border-radius: 999px;
+		box-shadow: 0 4px 14px rgba(53, 79, 245, 0.3);
+		transition: transform 150ms ease, box-shadow 150ms ease;
+		white-space: nowrap;
+	}
+
+	.ar-cta-button:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 8px 22px rgba(53, 79, 245, 0.4);
+	}
+
+	.ar-admin-link {
+		font-size: 13px;
+		color: #8a93a8;
+		text-decoration: none;
+		opacity: 0.6;
+		transition: opacity 150ms ease;
+	}
+
+	.ar-admin-link:hover {
+		opacity: 1;
+	}
+
+	/* Mobile toggle (hamburger) */
+	.ar-mobile-toggle {
+		display: none;
+		flex-direction: column;
+		gap: 4px;
+		background: none;
+		border: none;
+		padding: 8px;
+		cursor: pointer;
+	}
+
+	.ar-mobile-toggle span {
+		display: block;
+		width: 22px;
+		height: 2px;
+		background: #12263a;
+		border-radius: 2px;
+		transition: transform 200ms ease, opacity 200ms ease;
+	}
+
+	@media (max-width: 1024px) {
+		.ar-header-inner {
+			padding: 14px 24px;
+			gap: 20px;
+		}
+
+		.ar-nav-list {
+			gap: 24px;
+		}
+
+		.ar-search {
+			width: 140px;
+		}
+	}
+
+	@media (max-width: 880px) {
+		.ar-header-inner {
+			flex-wrap: wrap;
+		}
+
+		.ar-mobile-toggle {
+			display: flex;
+			margin-left: auto;
+		}
+
+		.ar-nav {
+			order: 3;
+			flex-basis: 100%;
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 300ms ease;
+		}
+
+		.ar-header.ar-mobile-open .ar-nav {
+			max-height: 600px;
+		}
+
+		.ar-nav-list {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0;
+			padding-top: 16px;
+		}
+
+		.ar-nav-list > li {
+			border-top: 1px solid #f0f2f9;
+		}
+
+		.ar-nav-link {
+			width: 100%;
+			padding: 14px 0;
+			justify-content: space-between;
+		}
+
+		.ar-submenu {
+			position: static;
+			box-shadow: none;
+			padding: 0 0 12px 16px;
+			min-width: 0;
+			opacity: 1;
+			visibility: visible;
+			transform: none;
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 200ms ease;
+		}
+
+		.ar-has-submenu.ar-open > .ar-submenu {
+			max-height: 500px;
+		}
+
+		.ar-header-right {
+			order: 2;
+			margin-left: auto;
+			gap: 8px;
+		}
+
+		.ar-search {
+			display: none;
+		}
+
+		.ar-cta-button {
+			padding: 10px 18px;
+			font-size: 13px;
+		}
+	}
+</style>

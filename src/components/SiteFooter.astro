@@ -1,0 +1,341 @@
+---
+const services = [
+	{ label: "Virtual CISO", href: "/" },
+	{ label: "RIA Cybersecurity Services", href: "/pages/ria-cybersecurity-services" },
+	{ label: "CMMC / NIST 800-171 Consulting", href: "/" },
+	{ label: "Healthcare", href: "/" },
+	{ label: "Microsoft 365 Security Audit", href: "/" },
+	{ label: "Google Workspace HIPAA Compliance Audit", href: "/" },
+	{ label: "Google Workspace Security Audit", href: "/" },
+];
+
+const company = [
+	{ label: "Blog", href: "/posts" },
+	{ label: "About", href: "/" },
+	{ label: "Privacy Policy", href: "/" },
+	{ label: "Accessibility Statement", href: "/" },
+	{ label: "Sitemap", href: "/" },
+	{ label: "Cookie Policy", href: "/" },
+];
+
+const resources = [
+	{ label: "Cybersecurity for RIAs and Investment Advisors", href: "/" },
+	{ label: "Small Business Cybersecurity Hub", href: "/" },
+	{ label: "Phishing", href: "/" },
+	{ label: "CMMC Level 2 Guide", href: "/" },
+	{ label: "The 97-Point Google Workspace Security Benchmark", href: "/" },
+];
+
+const phoneDisplay = "(888) 646-1616";
+const phoneHref = "tel:+18886461616";
+const email = "info@adeliarisk.com";
+const address = "1213 Purchase St, Unit 2, New Bedford, MA 02740";
+const logoUrl = "/_emdash/api/media/file/01KNN1B7PCKKGFP8NRX1QJJFWY.webp";
+const year = new Date().getFullYear();
+---
+
+<footer class="ar-footer">
+	<div class="ar-footer-inner">
+		<div class="ar-footer-grid">
+			<div class="ar-footer-brand">
+				<a href="/" class="ar-footer-logo" aria-label="Adelia Risk home">
+					<img src={logoUrl} alt="Adelia Risk" width="182" height="40" />
+				</a>
+				<p class="ar-footer-tagline">
+					Flexible cybersecurity solutions tailored to businesses ranging from 10 to 300 employees.
+				</p>
+				<ul class="ar-footer-contact">
+					<li>
+						<a href={phoneHref}>{phoneDisplay}</a>
+					</li>
+					<li>
+						<a href={`mailto:${email}`}>{email}</a>
+					</li>
+					<li>{address}</li>
+				</ul>
+			</div>
+
+			<div class="ar-footer-col">
+				<h4 class="ar-footer-heading">Services</h4>
+				<ul class="ar-footer-links">
+					{services.map((s) => (
+						<li><a href={s.href}>{s.label}</a></li>
+					))}
+				</ul>
+			</div>
+
+			<div class="ar-footer-col">
+				<h4 class="ar-footer-heading">Company</h4>
+				<ul class="ar-footer-links">
+					{company.map((c) => (
+						<li><a href={c.href}>{c.label}</a></li>
+					))}
+				</ul>
+			</div>
+
+			<div class="ar-footer-col">
+				<h4 class="ar-footer-heading">Resources</h4>
+				<ul class="ar-footer-links">
+					{resources.map((r) => (
+						<li><a href={r.href}>{r.label}</a></li>
+					))}
+				</ul>
+			</div>
+		</div>
+
+		<div class="ar-footer-bottom">
+			<p class="ar-footer-copyright">
+				&copy; {year} Adelia Risk LLC. All rights reserved.
+			</p>
+			<div class="ar-theme-switcher">
+				<button type="button" class="ar-theme-btn" data-theme="light" aria-label="Light mode">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+				</button>
+				<button type="button" class="ar-theme-btn" data-theme="dark" aria-label="Dark mode">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+				</button>
+				<button type="button" class="ar-theme-btn" data-theme="system" aria-label="System theme">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+				</button>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<script>
+	// Theme switcher (moved from Base.astro inline script)
+	const THEME_REGEX = /theme=([^;]+)/;
+	const themeBtns = document.querySelectorAll<HTMLButtonElement>(".ar-theme-btn");
+	const root = document.documentElement;
+
+	function setCookie(name: string, value: string, maxAge: number = 31536000) {
+		const secure = location.protocol === "https:" ? "; Secure" : "";
+		if (value === "") {
+			document.cookie = `${name}=; path=/; max-age=0; SameSite=Lax${secure}`;
+		} else {
+			document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax${secure}`;
+		}
+	}
+
+	function setTheme(theme: string) {
+		if (theme === "system") {
+			setCookie("theme", "");
+			root.classList.remove("light", "dark");
+			if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+				root.classList.add("dark");
+			}
+		} else {
+			setCookie("theme", theme);
+			root.classList.remove("light", "dark");
+			root.classList.add(theme);
+		}
+		updateActiveBtn(theme);
+	}
+
+	function updateActiveBtn(theme: string) {
+		themeBtns.forEach((btn) => {
+			btn.classList.toggle("active", btn.dataset.theme === theme);
+		});
+	}
+
+	function getStoredTheme(): string {
+		const match = document.cookie.match(THEME_REGEX);
+		return match ? match[1] : "system";
+	}
+
+	const storedTheme = getStoredTheme();
+	setTheme(storedTheme);
+
+	themeBtns.forEach((btn) => {
+		btn.addEventListener("click", () => {
+			setTheme(btn.dataset.theme || "system");
+		});
+	});
+
+	window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+		if (getStoredTheme() === "system") {
+			root.classList.toggle("dark", e.matches);
+		}
+	});
+</script>
+
+<style>
+	.ar-footer {
+		background: linear-gradient(135deg, #12263a 0%, #1a3151 100%);
+		color: #c8d1e0;
+		font-family: var(--font-sans);
+		margin-top: 80px;
+	}
+
+	.ar-footer-inner {
+		max-width: 1280px;
+		margin: 0 auto;
+		padding: 72px 32px 32px;
+	}
+
+	.ar-footer-grid {
+		display: grid;
+		grid-template-columns: 1.4fr 1fr 1fr 1fr;
+		gap: 56px;
+		padding-bottom: 56px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.ar-footer-brand {
+		min-width: 0;
+	}
+
+	.ar-footer-logo img {
+		display: block;
+		height: 40px;
+		width: auto;
+		filter: brightness(0) invert(1);
+		margin-bottom: 20px;
+	}
+
+	.ar-footer-tagline {
+		font-size: 14px;
+		line-height: 1.7;
+		color: #a8b3c7;
+		margin-bottom: 24px;
+		max-width: 320px;
+	}
+
+	.ar-footer-contact {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.ar-footer-contact li {
+		font-size: 14px;
+		color: #a8b3c7;
+		line-height: 1.6;
+	}
+
+	.ar-footer-contact a {
+		color: #ffffff;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 150ms ease;
+	}
+
+	.ar-footer-contact a:hover {
+		color: #6b81ff;
+	}
+
+	.ar-footer-col {
+		min-width: 0;
+	}
+
+	.ar-footer-heading {
+		font-family: var(--font-heading, var(--font-sans));
+		font-size: 13px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: #ffffff;
+		margin: 0 0 20px;
+	}
+
+	.ar-footer-links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.ar-footer-links a {
+		font-size: 14px;
+		color: #a8b3c7;
+		text-decoration: none;
+		line-height: 1.5;
+		transition: color 150ms ease;
+	}
+
+	.ar-footer-links a:hover {
+		color: #ffffff;
+	}
+
+	.ar-footer-bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 28px;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	.ar-footer-copyright {
+		font-size: 13px;
+		color: #8a93a8;
+		margin: 0;
+	}
+
+	.ar-theme-switcher {
+		display: flex;
+		gap: 4px;
+		padding: 4px;
+		background: rgba(255, 255, 255, 0.06);
+		border-radius: 8px;
+	}
+
+	.ar-theme-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 28px;
+		background: transparent;
+		border: none;
+		color: #8a93a8;
+		border-radius: 6px;
+		cursor: pointer;
+		transition: background 120ms ease, color 120ms ease;
+	}
+
+	.ar-theme-btn:hover {
+		color: #ffffff;
+	}
+
+	.ar-theme-btn.active {
+		background: rgba(255, 255, 255, 0.12);
+		color: #ffffff;
+	}
+
+	@media (max-width: 1024px) {
+		.ar-footer-grid {
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 40px;
+		}
+
+		.ar-footer-brand {
+			grid-column: span 3;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.ar-footer-inner {
+			padding: 56px 24px 24px;
+		}
+
+		.ar-footer-grid {
+			grid-template-columns: 1fr;
+			gap: 36px;
+			padding-bottom: 36px;
+		}
+
+		.ar-footer-brand {
+			grid-column: span 1;
+		}
+
+		.ar-footer-bottom {
+			justify-content: flex-start;
+		}
+	}
+</style>
