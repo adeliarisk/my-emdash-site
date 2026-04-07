@@ -112,7 +112,12 @@ const publishDate =
 		{
 			post.data.featured_image && (
 				<div class="article-hero" {...post.edit.featured_image}>
-					<Image image={post.data.featured_image} />
+					<Image
+						image={post.data.featured_image}
+						loading="eager"
+						fetchpriority="high"
+						decoding="async"
+					/>
 				</div>
 			)
 		}
@@ -343,17 +348,22 @@ const publishDate =
 		margin: 0 auto;
 	}
 
-	/* Hero image - full width within container */
+	/* Hero image - full width within container
+	   aspect-ratio reserves space before the image loads so we don't
+	   lose CLS points on first paint. Matches the 3:2 ratio of the
+	   optimized hero image (1200x800). */
 	.article-hero {
 		margin: var(--spacing-16) var(--spacing-6);
 		border-radius: var(--radius-lg);
 		overflow: hidden;
+		aspect-ratio: 3 / 2;
+		max-height: 500px;
+		background: var(--color-bg-subtle);
 	}
 
 	.article-hero img {
 		width: 100%;
-		height: auto;
-		max-height: 500px;
+		height: 100%;
 		object-fit: cover;
 	}
 
