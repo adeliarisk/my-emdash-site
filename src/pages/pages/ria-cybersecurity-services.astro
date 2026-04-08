@@ -1,0 +1,485 @@
+---
+/*
+ * RIA Cybersecurity Services — canonical page
+ *
+ * Static route that overrides src/pages/pages/[slug].astro for this
+ * specific slug. All content is lifted verbatim from the live
+ * adeliarisk.com/ria-cybersecurity-services/ page and composed through
+ * reusable Astro components.
+ */
+import Base from "../../layouts/Base.astro";
+import Hero from "../../components/close/Hero.astro";
+import TestimonialCarousel from "../../components/close/TestimonialCarousel.astro";
+import IconFeatureGrid from "../../components/close/IconFeatureGrid.astro";
+import TargetSection from "../../components/close/TargetSection.astro";
+import ComparisonBlock from "../../components/close/ComparisonBlock.astro";
+import SecSection from "../../components/close/SecSection.astro";
+import VideoEmbed from "../../components/close/VideoEmbed.astro";
+import FeatureGrid from "../../components/close/FeatureGrid.astro";
+import StatsRow from "../../components/close/StatsRow.astro";
+import CtaBand from "../../components/close/CtaBand.astro";
+import FAQAccordion from "../../components/close/FAQAccordion.astro";
+import CityList from "../../components/close/CityList.astro";
+
+const testimonials = [
+	{
+		name: "Damon H.",
+		role: "RIA Cybersecurity Client",
+		firm: "Wealth Management Firm, Connecticut",
+		quote: [
+			"We've relied on Adelia Risk for our cybersecurity for years, and the difference they've made is hard to overstate. Before Adelia, we had gaps we didn't even know about. Their initial assessment was a real eye-opener, and the prioritized project plan they built gave us a clear path from where we were to where we needed to be.",
+			"What sets Adelia apart is the breadth of what they actually do. They run our phishing tests and security training, audit our Google Workspace configuration, review our third-party vendors, and keep our IT provider honest when things slip through the cracks. When they recommended a new email security tool, it proved itself quickly by catching a real threat and handling it exactly the way it should have been handled.",
+			"Our principal has always said cybersecurity is the one thing that could put us out of business. Having Adelia Risk in our corner means we're more prepared than we've ever been. I'd recommend their RIA cybersecurity services without hesitation.",
+		],
+	},
+	{
+		name: "Stacey S.",
+		role: "RIA Cybersecurity Client",
+		firm: "Wealth Management Firm, Rhode Island",
+		quote: [
+			"Adelia Risk has been our cybersecurity partner for nearly eight years, and the relationship has only gotten stronger. When they first came in, their reports surfaced vulnerabilities that had gone unaddressed for years. We took those findings seriously enough to completely change how we run our IT reviews. That honesty is exactly what we needed, and it set the tone for a partnership built on trust and accountability.",
+			"What sets Adelia apart is how involved they stay. They don't hand us a checklist and disappear. They keep our IT provider honest, make sure nothing falls through the cracks, and guide us through decisions in plain English. When they recommended new security tools, those tools delivered. When they ran an AI security presentation for our staff, the feedback was overwhelmingly positive. They go well beyond what you'd expect.",
+			"We're more prepared for anything that comes our way from both a compliance and security perspective, and that's a direct result of working with Adelia Risk. I'd recommend their RIA cybersecurity services to any firm that wants a real partner, not just another vendor.",
+		],
+	},
+];
+
+const objections = [
+	{
+		title: '"We already have IT support"',
+		description:
+			"IT companies make mistakes. They miss a security setting. They forget to enable MFA on a new account. They configure email wrong. Those mistakes lead to breaches. And when something goes wrong, it's your liability, not theirs. We double-check everything and catch the gaps before hackers do.",
+	},
+	{
+		title: '"We\'re too small to be targeted"',
+		description:
+			"That's exactly what makes you a target. Hackers know you don't have a 50-person security team like the big banks. They know you have access to millions in client assets. And they know that one successful wire fraud pays better than ransoming a hundred small businesses. Small doesn't mean safe. It means easier.",
+	},
+	{
+		title: '"Our compliance consultant handles security"',
+		description:
+			"Your compliance consultant makes sure your ADV is accurate and you're following custody rules. But they're not monitoring your email for spoofing attempts at 2am. They're not running penetration tests on your systems. Compliance and security overlap, but they're not the same thing. Adelia Risk handles the RIA cybersecurity services so your compliance consultant can do what they do best.",
+	},
+	{
+		title: '"Schwab/Fidelity handles the security"',
+		description:
+			"Your custodian secures their systems, not yours. When a hacker compromises your email and sends a wire request that looks legitimate, that wire goes through. The custodian isn't liable. They followed a request that came from your firm. You are liable.",
+	},
+];
+
+const reasons = [
+	{
+		iconImage:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/Group-1-1.png",
+		title: "RIA-Specific Expertise",
+		description:
+			"We're not general-purpose cybersecurity consultants who also work with dentist offices and restaurants. We specialize in heavily regulated companies like SEC-registered investment advisors and wealth management firms. We understand the ADV Part 2A requirements, custodian relationships, and why \"my Schwab rep said we needed cyber insurance\" isn't actually a security strategy.",
+	},
+	{
+		iconImage:
+			"https://adeliarisk.com/wp-content/uploads/2026/02/vciso-ria-security-model.svg",
+		title: "vCISO RIA Security Model (Not Hourly Billing)",
+		description:
+			"You get a dedicated Virtual CISO for a predictable monthly fee. No surprise invoices. No nickel-and-diming for \"extra\" calls. We know your firm, know your people, and are available when you need them (even in the middle of the night). Not just when the hourly clock is running.",
+	},
+	{
+		iconImage:
+			"https://adeliarisk.com/wp-content/uploads/2026/02/we-work-with-your-team.svg",
+		title: "We Work With Your Team",
+		description:
+			"We're not here to fire your IT provider, sell you our products, or tell your compliance consultant they're doing it wrong. We integrate with your existing team and fill the gaps. Your IT team guys handle support. We handle cybersecurity for wealth management firms. Everyone stays in their lane to provide complete oversight of your security.",
+	},
+	{
+		iconImage:
+			"https://adeliarisk.com/wp-content/uploads/2026/02/Audit-Ready-Documentation.svg",
+		title: "Audit-Ready Documentation",
+		description:
+			"When the SEC examiner shows up, you'll have the cybersecurity compliance for RIAs they're looking for. Policies, procedures, training records, testing documentation, incident response plans. Nothing is scrambled together the night before. Everything is maintained and current throughout the year.",
+	},
+];
+
+const extras = [
+	"Phishing tests",
+	"Employee security training",
+	"Vulnerability scanning",
+	"Tabletop exercises",
+	"Penetration testing",
+	"24/7 computer monitoring",
+	"24/7 cloud monitoring",
+	"24/7 firewall monitoring",
+	"Audit support",
+	"Other state and federal regulations",
+	"Deep technical audits of your cloud systems",
+	"Ongoing project management",
+	"Dark web monitoring",
+	"Hacker database monitoring",
+	"Custom training",
+	"Fully transparent secure email",
+	"Disaster recovery test planning",
+	"Firewall security reviews",
+	"Website security reviews and monitoring",
+	"Answering client cybersecurity questions",
+];
+
+const results = [
+	{
+		before: "35%",
+		after: "100%",
+		label: 'From "We Think We\'re Secure" to SEC Examination Ready',
+		description:
+			"This wealth management firm started with only 35% of SEC-expected security controls documented. Month by month, our vCISO RIA security team implemented controls, configured security tools, and built their documentation. By month 6, all policies were written, tested, and maintained. Result: passed their SEC examination with zero RIA cybersecurity deficiencies cited.",
+		chart:
+			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-sec-compliance-improvement-chart.png",
+	},
+	{
+		before: "247",
+		after: "24",
+		label: "247 Security Holes Down to 24",
+		description:
+			"This RIA had 247 vulnerabilities across their systems. 18 of them were critical. Any one could have been the entry point for wire fraud or data theft. Our cybersecurity for RIAs prioritized the critical and high-severity issues first, implementing fixes while documenting Plans of Action for the rest. Result: all critical vulnerabilities eliminated.",
+		chart:
+			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-cybersecurity-vulnerability-reduction.png",
+	},
+	{
+		before: "28%",
+		after: "4%",
+		label: "Your Biggest Risk: Your Own Team",
+		description:
+			"Month 1: 28% of employees clicked phishing emails. That's the #1 way wire fraud starts. Today: 4% click rate. More importantly, 71% now actively report suspicious emails instead of ignoring them. The SEC expects security awareness training. Our RIA cybersecurity services make it stick.",
+		chart:
+			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-employee-phishing-test-results-1024x910.png",
+	},
+];
+
+const hackersWant = [
+	"Account numbers for high-net-worth individuals",
+	"Social Security numbers and tax returns",
+	"Wire transfer capabilities to custodian accounts",
+	"Access to millions (sometimes billions) in client assets",
+	"Trusted relationships with wealthy clients",
+];
+
+const secWatchFor = [
+	"Written RIA cybersecurity policies and procedures",
+	"Incident response plans (actually tested, not just documented)",
+	"Third-party vendor oversight",
+	"Employee training records",
+	"Evidence of ongoing security monitoring",
+];
+
+const bigBanks = {
+	title: "Big Banks",
+	tone: "neutral" as const,
+	items: [
+		"50+ person security team",
+		"Millions spent on security",
+		"Dedicated fraud detection",
+		"24/7 security operations center",
+	],
+};
+
+const yourRia = {
+	title: "Your RIA",
+	tone: "danger" as const,
+	items: [
+		"Your IT guy?",
+		"Thousands (if that)",
+		"Email and hope",
+		'"We\'ll deal with it Monday"',
+	],
+};
+
+const itProvider = {
+	title: "Your IT Provider",
+	tone: "neutral" as const,
+	items: [
+		"Keeps computers running",
+		"Fixes printer issues",
+		"Sets up new laptops",
+		"Manages Microsoft 365",
+		"Responds when things break",
+		"Knows technology",
+	],
+};
+
+const riaCyber = {
+	title: "RIA Cybersecurity",
+	tone: "positive" as const,
+	items: [
+		"Catches wire fraud attempts",
+		"Monitors for email compromise",
+		"Runs penetration tests",
+		"Runs phishing simulations",
+		"Catches problems before they break",
+		"Knows SEC examination expectations",
+	],
+};
+
+const faqs = [
+	{
+		q: "Don't I already have cybersecurity through my IT provider?",
+		a: [
+			"Your IT provider keeps your systems running. That's valuable, but it's not RIA cybersecurity services. When someone sends a spoofed email requesting a wire transfer, your IT guy isn't monitoring for that. When the SEC examiner asks if you did a tabletop test of your incident response plan, your IT guy probably can't produce one.",
+			"Adelia Risk works alongside your IT provider. They handle the technology. We handle the RIA cybersecurity. Most of our clients keep their existing IT relationships intact.",
+		],
+	},
+	{
+		q: "Aren't we too small to be targeted by hackers?",
+		a: [
+			"A small wealth management firm is exactly who they target. Big banks have 50-person security teams and massive fraud detection budgets. You have access to the same high-net-worth client assets with a fraction of the protection.",
+			"Hackers know that financial services firms have access to hundreds of millions of dollars. That's where the money is. One successful wire fraud against a small RIA can net more than ransoming a dozen regular businesses.",
+		],
+	},
+	{
+		q: "Doesn't our compliance consultant handle security?",
+		a: [
+			"Your compliance consultant makes sure your ADV is accurate, your custody rules are followed, and your regulatory filings are complete. That's important work.",
+			"But compliance consultants typically aren't running penetration tests, monitoring for email compromise, or training your team on social engineering tactics. There's overlap between compliance and RIA cybersecurity, but they're not the same thing. We handle the security side so your compliance consultant can focus on what they do best.",
+		],
+	},
+	{
+		q: "How do you work with our IT company?",
+		a: [
+			"We work together. We're not here to fire or replace your IT provider or criticize their work. They handle technology like keeping computers running, managing Microsoft 365, and setting up new employees. We handle cybersecurity for RIA firms, including figuring out how to stop wire fraud, monitoring for threats, and preparing for SEC examinations.",
+			"Most of our clients keep their existing IT relationships. If the IT companies aren't up to snuff, we can help you find good ones. We just add the RIA cybersecurity layer that IT providers aren't equipped to provide.",
+		],
+	},
+	{
+		q: "Our custodian (Schwab/Fidelity) says we need cyber insurance. Is that all we need?",
+		a: [
+			"Your custodian is right that you need cyber insurance. But insurance isn't prevention. It's recovery after something bad happens. And cyber insurance policies are full of exclusions.",
+			"If you didn't have \"adequate security controls\" like MFA, email security, and documented policies, your claim might be denied. We help you build the RIA cybersecurity foundation that makes your insurance actually usable if you need it.",
+		],
+	},
+	{
+		q: "What's the cost of RIA cybersecurity services?",
+		a: [
+			"Prices start at a few hundred dollars a month for small clients and scale competitively for larger and more complex companies. Unlike hourly consultants who provide cybersecurity for RIAs that nickel-and-dime you for every conversation, our pricing is predictable. With Adelia Risk, you know what you're paying every month.",
+			"Most wealth management firms find that good cybersecurity for RIAs costs less than one successful wire fraud incident, and far less than an SEC enforcement action.",
+		],
+	},
+	{
+		q: "How long does it take to get SEC-compliant?",
+		a: [
+			"It all depends on where you're starting. If you have no RIA cybersecurity in place, expect 3-6 months to build a solid foundation that includes policies, procedures, training, and technical controls.",
+			"If you already have some security measures but need to formalize and document them, we can often get you examination-ready in 60-90 days.",
+			"The good news is that you don't need to be perfect on day one. The SEC wants to see that you have a reasonable program and you're making progress.",
+		],
+	},
+	{
+		q: "What happens during an SEC cybersecurity examination?",
+		a: [
+			"SEC examiners typically request documentation first. This will include written RIA cybersecurity policies, evidence of employee training, incident response plans, and vendor management documentation. They want to see that you've thought about security and have processes in place.",
+			'Then, they may interview key personnel. Expect questions like: "How do you handle a suspected breach?" "What\'s your wire transfer verification process?" and "When was your last penetration test?"',
+			"Our clients walk into these examinations with organized documentation and staff who know what to say. That's the difference between a successful examination and a deficiency letter.",
+		],
+	},
+	{
+		q: "Is SEC cybersecurity compliance a one-time thing or ongoing?",
+		a: [
+			"Ongoing. The SEC expects you to maintain your RIA cybersecurity program, not just document it once and forget about it.",
+			"That means annual policy reviews, regular employee training, ongoing monitoring, and evidence that you're actually following your procedures. Our vCISO RIA security model is built to keep you SEC compliant at all times. We don't disappear after the initial engagement. We're here to maintain your program year-round.",
+		],
+	},
+	{
+		q: "Can we handle SEC cybersecurity compliance ourselves?",
+		a: [
+			"Technically, yes. Realistically, most wealth management firms don't have the expertise or bandwidth to provide their own RIA cybersecurity services.",
+			"Building a compliant security program requires understanding both the technical security landscape and SEC examination expectations. It means staying current on emerging threats. It means having someone who knows what \"reasonable\" security looks like for a firm your size.",
+			"You could hire a full-time CISO (typically $200,000+ salary plus benefits). Or you could get a fractional vCISO who specializes in RIA cybersecurity services for a fraction of the cost. That's what Adelia Risk offers.",
+		],
+	},
+];
+
+const cities = [
+	"Boston",
+	"New York",
+	"Philadelphia",
+	"Houston",
+	"Dallas",
+	"Denver",
+	"San Francisco",
+	"Los Angeles",
+	"Seattle",
+	"Washington DC",
+	"Atlanta",
+	"Chicago",
+];
+---
+
+<Base
+	title="RIA Cybersecurity Services"
+	description="Adelia Risk delivers expert RIA cybersecurity services for SEC-registered advisors — from vCISO support to exam-ready documentation."
+>
+	<Hero
+		eyebrow="For SEC-Registered Advisors"
+		title="RIA Cybersecurity Services for Wealth Management Firms"
+		subtitle='Stop worrying about wire fraud, SEC examinations, and "what if something happens to client data." We handle it.'
+		ctaLabel="Get Your Free RIA Cybersecurity Assessment"
+		ctaHref="#"
+		align="center"
+	/>
+
+	<section class="ar-section" id="intro">
+		<div class="ar-container-narrow" style="text-align: center;">
+			<p class="ar-intro-lead">
+				Adelia Risk is a cybersecurity firm that handles RIA cybersecurity services for SEC-registered
+				advisors and wealth management firms. We build your security program, manage your tools, and
+				<a href="#">get you examination-ready</a>. We've helped RIAs go from "we think we're secure" to
+				confidently passing SEC examinations without losing their minds (or their clients).
+			</p>
+			<div class="ar-intro-cta">
+				<a href="#why-adelia" class="ar-btn ar-btn-outline">See How We Work</a>
+			</div>
+		</div>
+	</section>
+
+	<TestimonialCarousel
+		eyebrow="What Our Clients Say"
+		title="What Our Clients Say"
+		titleAccent="About Our RIA Cybersecurity Services"
+		testimonials={testimonials}
+	/>
+
+	<IconFeatureGrid
+		eyebrow="You're Not a Cybersecurity Expert"
+		title="You've probably told yourself one of these"
+		subtitle="The four things RIAs say when they explain why they haven't built a real cybersecurity program. Here's why each one misses the point."
+		features={objections}
+		columns={2}
+		dark
+	/>
+
+	<TargetSection
+		eyebrow="Why RIAs Are In The Crosshairs"
+		title="You Have a Target on Your Back. Here's Why."
+		body="RIAs and wealth management firms are among the most targeted businesses in the country because they control over $145 trillion in assets. You aren't targeted because you're doing something wrong. You're targeted because you're doing something valuable."
+		listTitle="You Have Everything Hackers Want"
+		items={hackersWant}
+		footer="A single successful RIA cyberattack can yield more than dozens of attacks on regular businesses. Hackers know this."
+		backgroundImage="https://adeliarisk.com/wp-content/uploads/2026/02/ChatGPT-Image-Jun-16-2025-10_41_43-AM-1.jpg"
+	/>
+
+	<ComparisonBlock
+		eyebrow="Asymmetric Risk"
+		title="You're Easier to Attack Than Banks"
+		subtitle="Banks spend millions on security. Most RIAs are running with the bare minimum. Here's the gap hackers exploit."
+		left={bigBanks}
+		right={yourRia}
+	/>
+
+	<SecSection
+		eyebrow="Regulatory Pressure"
+		title="The SEC Is Watching"
+		paragraphs={[
+			"The SEC created a new Cyber and Emerging Technologies Unit (CETU) in February 2025. One of its priority areas is \"regulated entities' compliance with cybersecurity rules and regulations, including rules relating to the protection of customer information.\"",
+			"SEC examinations can result in deficiency letters if your cybersecurity program doesn't meet expectations. That can mean enforcement actions, fines, and reputational damage. Our RIA cybersecurity services get you prepared.",
+		]}
+		listTitle="What SEC examiners look for"
+		items={secWatchFor}
+	/>
+
+	<ComparisonBlock
+		eyebrow="Know The Difference"
+		title="IT Support and Cybersecurity Are Different Jobs"
+		subtitle="Your IT provider is great at keeping the lights on. RIA cybersecurity is a different discipline entirely."
+		left={itProvider}
+		right={riaCyber}
+		footnote="Our vCISO RIA security team works alongside your IT provider. They handle the tech. We double-check the security. Most of our clients keep their existing IT relationships."
+		dark
+	/>
+
+	<div id="why-adelia">
+		<IconFeatureGrid
+			eyebrow="Why Wealth Management Firms Choose Adelia for RIA Cybersecurity Services"
+			title="An RIA cybersecurity partner, not a vendor"
+			subtitle="Four things that separate us from general-purpose cybersecurity consultants and hourly IT providers."
+			features={reasons}
+			columns={2}
+		/>
+	</div>
+
+	<VideoEmbed
+		eyebrow="See The Model"
+		title="How Our Virtual CISOs Work With RIA Clients"
+		subtitle="A short walkthrough of how Adelia Risk's vCISO team partners with wealth management firms to build security programs and pass SEC examinations."
+		videoId="-Ich21VoCTo"
+	/>
+
+	<FeatureGrid
+		eyebrow="Beyond the Base Program"
+		title="Maybe you need more from a Virtual CISO?"
+		subtitle="Our RIA cybersecurity services aren't one-size-fits-all. Some virtual CISOs offer the same program to everyone — and sometimes that's overkill. We'll help you decide if and when any of these additional solutions are needed."
+		items={extras}
+	/>
+
+	<StatsRow
+		eyebrow="Proven Cybersecurity Results"
+		title="Real outcomes our RIA clients have seen"
+		subtitle="Three representative engagements and where they landed."
+		stats={results}
+		dark
+	/>
+
+	<CtaBand
+		eyebrow="RIA Cybersecurity That Grows With You"
+		title="Let's book a consultation"
+		subtitle="Prices start at a few hundred dollars a month for small clients and scale competitively for larger and more complex companies. Let's book a RIA cybersecurity services consultation to show how we can help."
+		ctaLabel="Book a Consultation"
+		ctaHref="#"
+	/>
+
+	<FAQAccordion
+		eyebrow="Frequently Asked"
+		title="RIA Cybersecurity Questions Answered"
+		subtitle="The questions wealth management firms ask us most often when they start evaluating a new cybersecurity program."
+		faqs={faqs}
+	/>
+
+	<CityList
+		eyebrow="Nationwide Coverage"
+		title="RIA Cybersecurity Services Nationwide"
+		paragraphs={[
+			"Adelia Risk provides RIA cybersecurity services to SEC-registered investment advisors and wealth management firms across the United States. Whether you're based in New York, California, Texas, Florida, or anywhere in between, our virtual CISO model delivers the same security coverage.",
+			"Our clients include independent RIAs, multi-family offices, broker-dealers, and hybrid advisors managing assets from $100 million to over $10 billion. We know the security challenges wealth management firms face. We've built our services to address them.",
+		]}
+		listLabel="Service areas include:"
+		cities={cities}
+		mapImage="https://adeliarisk.com/wp-content/uploads/2026/02/map-new.jpg"
+		mapAlt="USA map showing Adelia Risk nationwide RIA cybersecurity coverage"
+	/>
+
+	<CtaBand
+		eyebrow="Ready When You Are"
+		title="Protect Your Wealth Management Firm with our RIA Cybersecurity Services"
+		subtitle="Talk to a vCISO who specializes in RIAs. We'll walk through your current setup, tell you exactly where you stand, and show you what it would cost to close the gaps."
+		ctaLabel="Book Your Free Assessment"
+		ctaHref="#"
+	/>
+</Base>
+
+<style>
+	.ar-intro-lead {
+		font-family: var(--font-heading);
+		font-size: clamp(1.25rem, 2.3vw, 1.75rem);
+		line-height: 1.45;
+		color: var(--color-text);
+		margin: 0 0 2rem;
+		font-weight: 500;
+	}
+
+	.ar-intro-lead :global(a) {
+		color: var(--color-blue);
+		border-bottom: 2px solid currentColor;
+		transition: color 180ms ease;
+	}
+
+	.ar-intro-lead :global(a:hover) {
+		color: var(--color-blue-hover);
+	}
+
+	.ar-intro-cta {
+		display: flex;
+		justify-content: center;
+	}
+</style>

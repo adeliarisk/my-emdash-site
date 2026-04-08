@@ -1,6 +1,7 @@
 ---
 interface Feature {
-	icon?: string; // svg path d="" (optional)
+	icon?: string; // svg path d=""
+	iconImage?: string; // image URL (takes precedence over icon path)
 	title: string;
 	description: string;
 }
@@ -11,6 +12,7 @@ interface Props {
 	subtitle?: string;
 	features: Feature[];
 	tinted?: boolean;
+	dark?: boolean;
 	columns?: 2 | 3;
 }
 
@@ -20,15 +22,22 @@ const {
 	subtitle,
 	features,
 	tinted = false,
+	dark = false,
 	columns = 3,
 } = Astro.props;
+
+const sectionClass = dark
+	? "c-feat-dark"
+	: tinted
+		? "ar-section-tinted"
+		: "";
 ---
 
-<section class={`c-feat ${tinted ? "c-feat-tinted" : ""}`}>
-	<div class="close-container">
+<section class={`c-feat ar-section ${sectionClass}`}>
+	<div class="ar-container">
 		{(eyebrow || title || subtitle) && (
 			<header class="c-feat-header">
-				{eyebrow && <span class="close-eyebrow">{eyebrow}</span>}
+				{eyebrow && <span class="ar-eyebrow">{eyebrow}</span>}
 				{title && <h2 class="c-feat-title">{title}</h2>}
 				{subtitle && <p class="c-feat-subtitle">{subtitle}</p>}
 			</header>
@@ -36,13 +45,17 @@ const {
 		<div class={`c-feat-grid c-feat-cols-${columns}`}>
 			{features.map((f) => (
 				<article class="c-feat-card">
-					{f.icon && (
+					{f.iconImage ? (
+						<div class="c-feat-icon c-feat-icon-image">
+							<img src={f.iconImage} alt="" loading="lazy" />
+						</div>
+					) : f.icon ? (
 						<div class="c-feat-icon">
 							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<path d={f.icon} />
 							</svg>
 						</div>
-					)}
+					) : null}
 					<h3 class="c-feat-card-title">{f.title}</h3>
 					<p class="c-feat-card-desc">{f.description}</p>
 				</article>
@@ -53,40 +66,70 @@ const {
 
 <style>
 	.c-feat {
-		padding: var(--close-section-y) var(--close-gutter);
-		background: var(--close-white);
+		position: relative;
+		overflow: hidden;
 	}
 
-	.c-feat-tinted {
-		background: var(--close-surface);
+	.c-feat-dark {
+		background: var(--gradient-hero);
+		color: var(--color-on-accent);
+	}
+
+	.c-feat-dark::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image: radial-gradient(
+			circle at 1px 1px,
+			rgba(255, 255, 255, 0.05) 1px,
+			transparent 0
+		);
+		background-size: 32px 32px;
+		pointer-events: none;
 	}
 
 	.c-feat-header {
-		max-width: 760px;
+		max-width: 820px;
 		margin: 0 auto 3.5rem;
 		text-align: center;
+		position: relative;
+		z-index: 1;
 	}
 
 	.c-feat-title {
-		font-family: var(--close-font-heading);
-		font-size: var(--close-h2);
+		font-family: var(--font-heading);
+		font-size: clamp(1.75rem, 3vw, 2.625rem);
 		line-height: 1.15;
 		letter-spacing: -0.02em;
-		color: var(--close-ink);
+		color: var(--color-text);
 		margin: 0 0 1rem;
 		font-weight: 700;
 	}
 
+	.c-feat-dark .c-feat-title {
+		color: var(--color-on-accent);
+	}
+
 	.c-feat-subtitle {
-		font-size: var(--close-lead);
+		font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
 		line-height: 1.6;
-		color: var(--close-ink-soft);
+		color: var(--color-text-secondary);
 		margin: 0;
+	}
+
+	.c-feat-dark .c-feat-subtitle {
+		color: rgba(255, 255, 255, 0.82);
+	}
+
+	.c-feat-dark .c-feat-header :global(.ar-eyebrow) {
+		color: #8faaff;
 	}
 
 	.c-feat-grid {
 		display: grid;
 		gap: clamp(1.25rem, 2vw, 2rem);
+		position: relative;
+		z-index: 1;
 	}
 
 	.c-feat-cols-3 {
@@ -98,46 +141,89 @@ const {
 	}
 
 	.c-feat-card {
-		background: var(--close-white);
-		border-radius: var(--close-radius-card);
+		background: var(--color-bg);
+		border-radius: var(--radius-lg);
 		padding: 2.25rem 2rem 2.5rem;
-		box-shadow: var(--close-shadow-card);
+		box-shadow: var(--shadow-card);
 		transition:
 			transform 240ms ease,
 			box-shadow 240ms ease;
 	}
 
+	.c-feat-dark .c-feat-card {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		box-shadow: none;
+	}
+
 	.c-feat-card:hover {
 		transform: translateY(-4px);
-		box-shadow: var(--close-shadow-card-hover);
+		box-shadow: var(--shadow-card-hover);
+	}
+
+	.c-feat-dark .c-feat-card:hover {
+		background: rgba(255, 255, 255, 0.09);
+		box-shadow: none;
 	}
 
 	.c-feat-icon {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 56px;
-		height: 56px;
-		border-radius: 14px;
-		background: var(--close-surface-alt);
-		color: var(--close-blue);
+		width: 72px;
+		height: 72px;
+		border-radius: 18px;
+		background: var(--color-bg-tint);
+		color: var(--color-blue);
 		margin-bottom: 1.5rem;
 	}
 
+	.c-feat-dark .c-feat-icon {
+		background: rgba(53, 79, 245, 0.2);
+		color: #a5baff;
+	}
+
+	.c-feat-icon-image {
+		background: transparent;
+		width: 80px;
+		height: 80px;
+	}
+
+	.c-feat-dark .c-feat-icon-image {
+		background: transparent;
+	}
+
+	.c-feat-icon-image img {
+		max-width: 100%;
+		max-height: 100%;
+		width: auto;
+		height: auto;
+	}
+
 	.c-feat-card-title {
-		font-family: var(--close-font-heading);
+		font-family: var(--font-heading);
 		font-size: 1.375rem;
 		line-height: 1.25;
-		color: var(--close-ink);
+		color: var(--color-text);
 		margin: 0 0 0.75rem;
 		font-weight: 700;
 	}
 
+	.c-feat-dark .c-feat-card-title {
+		color: var(--color-on-accent);
+	}
+
 	.c-feat-card-desc {
-		font-size: var(--close-small);
-		line-height: 1.65;
-		color: var(--close-ink-soft);
+		font-size: 0.9375rem;
+		line-height: 1.7;
+		color: var(--color-text-secondary);
 		margin: 0;
+	}
+
+	.c-feat-dark .c-feat-card-desc {
+		color: rgba(255, 255, 255, 0.78);
 	}
 
 	@media (max-width: 880px) {

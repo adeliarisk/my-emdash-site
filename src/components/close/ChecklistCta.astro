@@ -1,0 +1,212 @@
+---
+interface Props {
+	eyebrow?: string;
+	title: string;
+	subtitle?: string;
+	ctaLabel?: string;
+	demoNote?: boolean;
+}
+
+const {
+	eyebrow = "Free Download",
+	title,
+	subtitle,
+	ctaLabel = "Download the Checklist",
+	demoNote = true,
+} = Astro.props;
+---
+
+<aside class="c-check" role="complementary">
+	<div class="c-check-bg" aria-hidden="true"></div>
+	<div class="c-check-inner">
+		<div class="c-check-mark" aria-hidden="true">
+			<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M9 11l3 3L22 4" />
+				<path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+			</svg>
+		</div>
+		<div class="c-check-copy">
+			<span class="c-check-eyebrow">{eyebrow}</span>
+			<h3 class="c-check-title">{title}</h3>
+			{subtitle && <p class="c-check-subtitle">{subtitle}</p>}
+		</div>
+		<form class="c-check-form" onsubmit="event.preventDefault();">
+			<label for="c-check-email" class="c-check-label">Email address</label>
+			<div class="c-check-field">
+				<input
+					id="c-check-email"
+					type="email"
+					placeholder="you@company.com"
+					disabled
+					aria-describedby={demoNote ? "c-check-demo" : undefined}
+				/>
+				<button type="submit" class="c-check-button" disabled>
+					{ctaLabel}
+				</button>
+			</div>
+			{demoNote && (
+				<p id="c-check-demo" class="c-check-demo">
+					Demo only — form is not connected on this test site.
+				</p>
+			)}
+		</form>
+	</div>
+</aside>
+
+<style>
+	.c-check {
+		position: relative;
+		margin: 3rem 0;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		color: var(--color-on-accent);
+	}
+
+	.c-check-bg {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, #12263a 0%, #1a3151 55%, #1c36df 100%);
+		z-index: 0;
+	}
+
+	.c-check-bg::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image: radial-gradient(
+			circle at 1px 1px,
+			rgba(255, 255, 255, 0.05) 1px,
+			transparent 0
+		);
+		background-size: 20px 20px;
+	}
+
+	.c-check-inner {
+		position: relative;
+		z-index: 1;
+		padding: clamp(2rem, 4vw, 3rem);
+		display: grid;
+		grid-template-columns: auto 1fr;
+		column-gap: 1.5rem;
+		row-gap: 1.5rem;
+		align-items: start;
+	}
+
+	.c-check-mark {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 64px;
+		height: 64px;
+		background: linear-gradient(135deg, #ffd466 0%, #ffb93a 100%);
+		color: #12263a;
+		border-radius: 16px;
+		box-shadow: 0 10px 30px rgba(255, 185, 58, 0.3);
+		grid-row: 1;
+		grid-column: 1;
+	}
+
+	.c-check-copy {
+		grid-row: 1;
+		grid-column: 2;
+	}
+
+	.c-check-eyebrow {
+		display: inline-block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: #ffd466;
+		margin-bottom: 0.5rem;
+	}
+
+	.c-check-title {
+		font-family: var(--font-heading);
+		font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+		line-height: 1.2;
+		margin: 0 0 0.5rem;
+		color: var(--color-on-accent);
+		font-weight: 700;
+	}
+
+	.c-check-subtitle {
+		font-size: 1rem;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.8);
+		margin: 0;
+	}
+
+	.c-check-form {
+		grid-column: 1 / -1;
+		margin-top: 0.5rem;
+	}
+
+	.c-check-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+
+	.c-check-field {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.c-check-field input {
+		flex: 1 1 280px;
+		padding: 1rem 1.25rem;
+		font-family: var(--font-sans);
+		font-size: 1rem;
+		color: var(--color-text);
+		background: rgba(255, 255, 255, 0.95);
+		border: 2px solid rgba(255, 255, 255, 0.6);
+		border-radius: var(--radius-btn);
+		cursor: not-allowed;
+	}
+
+	.c-check-field input::placeholder {
+		color: var(--color-muted);
+	}
+
+	.c-check-button {
+		padding: 1rem 2rem;
+		font-family: var(--font-sans);
+		font-size: 0.9375rem;
+		font-weight: 700;
+		color: #12263a;
+		background: linear-gradient(135deg, #ffd466 0%, #ffb93a 100%);
+		border: none;
+		border-radius: var(--radius-btn);
+		cursor: not-allowed;
+		box-shadow: 0 6px 20px rgba(255, 185, 58, 0.3);
+		white-space: nowrap;
+	}
+
+	.c-check-demo {
+		margin: 0.875rem 0 0;
+		font-size: 0.8125rem;
+		color: rgba(255, 255, 255, 0.5);
+		font-style: italic;
+	}
+
+	@media (max-width: 640px) {
+		.c-check-inner {
+			grid-template-columns: 1fr;
+		}
+		.c-check-mark {
+			grid-row: auto;
+			grid-column: 1;
+		}
+		.c-check-copy {
+			grid-row: auto;
+			grid-column: 1;
+		}
+	}
+</style>

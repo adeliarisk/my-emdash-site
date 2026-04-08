@@ -1,0 +1,146 @@
+---
+interface Props {
+	eyebrow?: string;
+	title: string;
+	subtitle?: string;
+	videoId: string; // YouTube video id
+	thumbnailFallback?: string;
+}
+
+const { eyebrow, title, subtitle, videoId, thumbnailFallback } = Astro.props;
+const thumb = thumbnailFallback || `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+const embedSrc = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`;
+---
+
+<section class="c-video ar-section ar-section-tinted">
+	<div class="ar-container">
+		<header class="c-video-header">
+			{eyebrow && <span class="ar-eyebrow">{eyebrow}</span>}
+			<h2 class="c-video-title">{title}</h2>
+			{subtitle && <p class="c-video-subtitle">{subtitle}</p>}
+		</header>
+		<div class="c-video-frame" data-video-frame data-embed={embedSrc}>
+			<img src={thumb} alt="" class="c-video-thumb" loading="lazy" />
+			<button class="c-video-play" type="button" aria-label="Play video">
+				<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M8 5v14l11-7z" />
+				</svg>
+			</button>
+		</div>
+	</div>
+</section>
+
+<script>
+	const frames = document.querySelectorAll<HTMLElement>("[data-video-frame]");
+	frames.forEach((frame) => {
+		const button = frame.querySelector<HTMLButtonElement>(".c-video-play");
+		const embed = frame.dataset.embed;
+		if (!button || !embed) return;
+		button.addEventListener("click", () => {
+			const iframe = document.createElement("iframe");
+			iframe.src = `${embed}&autoplay=1`;
+			iframe.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+			iframe.setAttribute("allowfullscreen", "");
+			iframe.setAttribute("loading", "lazy");
+			iframe.title = "Video";
+			// Remove existing children without using innerHTML (avoids XSS lint warning)
+			while (frame.firstChild) {
+				frame.removeChild(frame.firstChild);
+			}
+			frame.appendChild(iframe);
+			frame.classList.add("is-playing");
+		});
+	});
+</script>
+
+<style>
+	.c-video-header {
+		max-width: 760px;
+		margin: 0 auto 3rem;
+		text-align: center;
+	}
+
+	.c-video-title {
+		font-family: var(--font-heading);
+		font-size: clamp(1.75rem, 3vw, 2.625rem);
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: var(--color-text);
+		margin: 0 0 1rem;
+		font-weight: 700;
+	}
+
+	.c-video-subtitle {
+		font-size: 1.0625rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.c-video-frame {
+		position: relative;
+		width: 100%;
+		max-width: 960px;
+		margin: 0 auto;
+		aspect-ratio: 16 / 9;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		background: var(--color-navy);
+		box-shadow:
+			0 30px 60px rgba(18, 38, 58, 0.25),
+			0 10px 20px rgba(18, 38, 58, 0.15);
+		cursor: pointer;
+	}
+
+	.c-video-thumb {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: transform 400ms ease;
+	}
+
+	.c-video-frame:hover .c-video-thumb {
+		transform: scale(1.03);
+	}
+
+	.c-video-play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 88px;
+		height: 88px;
+		border-radius: 50%;
+		background: var(--gradient-cta);
+		color: var(--color-on-accent);
+		border: none;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: var(--shadow-cta);
+		transition:
+			transform 220ms ease,
+			box-shadow 220ms ease;
+	}
+
+	.c-video-play svg {
+		margin-left: 4px;
+	}
+
+	.c-video-frame:hover .c-video-play {
+		transform: translate(-50%, -50%) scale(1.06);
+		box-shadow: var(--shadow-cta-hover);
+	}
+
+	.c-video-frame.is-playing {
+		cursor: default;
+	}
+
+	.c-video-frame.is-playing iframe {
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+</style>

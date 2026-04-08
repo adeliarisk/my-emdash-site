@@ -1,0 +1,140 @@
+---
+interface Props {
+	eyebrow?: string;
+	title: string;
+	paragraphs: string[];
+	listLabel?: string;
+	cities: string[];
+	mapImage?: string;
+	mapAlt?: string;
+}
+
+const {
+	eyebrow,
+	title,
+	paragraphs,
+	listLabel,
+	cities,
+	mapImage,
+	mapAlt = "United States map",
+} = Astro.props;
+---
+
+<section class="c-cities ar-section">
+	<div class="ar-container">
+		<header class="c-cities-header">
+			{eyebrow && <span class="ar-eyebrow">{eyebrow}</span>}
+			<h2 class="c-cities-title">{title}</h2>
+			{paragraphs.map((p) => (
+				<p class="c-cities-body">{p}</p>
+			))}
+			{listLabel && <p class="c-cities-label">{listLabel}</p>}
+		</header>
+		{mapImage && (
+			<div class="c-cities-map">
+				<img src={mapImage} alt={mapAlt} loading="lazy" />
+			</div>
+		)}
+		<ul class="c-cities-list">
+			{cities.map((city) => (
+				<li class="c-cities-chip">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M12 2C7 2 3 6 3 11c0 6.5 9 13 9 13s9-6.5 9-13c0-5-4-9-9-9z"/>
+						<circle cx="12" cy="11" r="3"/>
+					</svg>
+					<span>{city}</span>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.c-cities-header {
+		max-width: 820px;
+		margin: 0 auto 2.5rem;
+		text-align: center;
+	}
+
+	.c-cities-title {
+		font-family: var(--font-heading);
+		font-size: clamp(1.75rem, 3vw, 2.625rem);
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: var(--color-text);
+		margin: 0 0 1.25rem;
+		font-weight: 700;
+	}
+
+	.c-cities-body {
+		font-size: 1.0625rem;
+		line-height: 1.7;
+		color: var(--color-text-secondary);
+		margin: 0 0 1rem;
+	}
+
+	.c-cities-body:last-of-type {
+		margin-bottom: 0;
+	}
+
+	.c-cities-label {
+		font-size: 0.9375rem;
+		color: var(--color-muted);
+		margin: 1.25rem 0 0;
+		font-weight: 500;
+	}
+
+	.c-cities-map {
+		max-width: 800px;
+		margin: 0 auto 2.5rem;
+		padding: 0 1rem;
+	}
+
+	.c-cities-map img {
+		width: 100%;
+		height: auto;
+		display: block;
+		opacity: 0.95;
+	}
+
+	.c-cities-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		justify-content: center;
+		max-width: 900px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.c-cities-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.25rem;
+		background: var(--color-bg);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		font-size: 0.9375rem;
+		color: var(--color-text);
+		font-weight: 500;
+		box-shadow: var(--shadow-card);
+		transition:
+			transform 180ms ease,
+			border-color 180ms ease,
+			color 180ms ease;
+	}
+
+	.c-cities-chip:hover {
+		transform: translateY(-2px);
+		border-color: var(--color-blue);
+		color: var(--color-blue);
+	}
+
+	.c-cities-chip svg {
+		color: var(--color-blue);
+	}
+</style>

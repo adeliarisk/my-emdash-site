@@ -3,8 +3,7 @@ import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-// Self-hosted fonts (replaces render-blocking Google Fonts request).
-// Using the /latin subsets keeps the CSS small — no cyrillic/greek/etc.
+// Self-hosted fonts — latin subset only keeps the CSS small.
 import "@fontsource/roboto/latin-400.css";
 import "@fontsource/roboto/latin-500.css";
 import "@fontsource/roboto/latin-700.css";
@@ -43,7 +42,6 @@ const siteTitle = "Adelia Risk";
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
 
 // Build public page context for plugin contributions
-// SEO data is passed here and rendered securely by EmDashHead
 const pageCtx = createPublicPageContext({
 	Astro,
 	kind: content ? "content" : "custom",
@@ -57,7 +55,6 @@ const pageCtx = createPublicPageContext({
 	articleMeta: { publishedTime, modifiedTime, author },
 	siteName: siteTitle,
 });
-
 ---
 
 <!doctype html>
@@ -67,19 +64,6 @@ const pageCtx = createPublicPageContext({
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
-		<script is:inline>
-			// Apply theme immediately to prevent flash
-			(function () {
-				var c = document.cookie;
-				var i = c.indexOf("theme=");
-				var theme = i >= 0 ? c.slice(i + 6).split(";")[0] : null;
-				if (theme === "dark" || theme === "light") {
-					document.documentElement.classList.add(theme);
-				} else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-					document.documentElement.classList.add("dark");
-				}
-			})();
-		</script>
 	</head>
 	<body>
 		<EmDashBodyStart page={pageCtx} />
@@ -92,9 +76,9 @@ const pageCtx = createPublicPageContext({
 		<SiteFooter />
 
 		<style is:global>
-			*:where(:not([class*="emdash"]):not([class*="ec-"])),
-			*:where(:not([class*="emdash"]):not([class*="ec-"]))::before,
-			*:where(:not([class*="emdash"]):not([class*="ec-"]))::after {
+			*,
+			*::before,
+			*::after {
 				box-sizing: border-box;
 			}
 
@@ -121,23 +105,28 @@ const pageCtx = createPublicPageContext({
 			}
 
 			:root {
-				/* Colors - Light mode (default) */
+				/* === Adelia Risk brand tokens (light-only) === */
 				--color-bg: #ffffff;
-				--color-bg-subtle: #fafafa;
-				--color-text: #1a1a1a;
-				--color-text-secondary: #525252;
-				--color-muted: #8b8b8b;
-				--color-border: #e5e5e5;
-				--color-border-subtle: #f0f0f0;
-				--color-surface: #f7f7f7;
-				--color-accent: #0066cc;
-				--color-accent-hover: #0052a3;
-				--color-on-accent: white;
-				--color-accent-ring: color-mix(
-					in srgb,
-					var(--color-accent) 25%,
-					transparent
-				);
+				--color-bg-subtle: #f9faff;
+				--color-bg-tint: #f3f5ff;
+				--color-text: #12263a;
+				--color-text-secondary: #475770;
+				--color-muted: #8a93a8;
+				--color-border: #e1e5f2;
+				--color-border-subtle: #eef1f9;
+				--color-surface: #f3f5ff;
+
+				/* Brand primaries */
+				--color-navy: #12263a;
+				--color-navy-deep: #0a1a2d;
+				--color-navy-light: #1a3151;
+				--color-blue: #354ff5;
+				--color-blue-hover: #1c36df;
+				--color-magenta: #d220ff;
+				--color-accent: #354ff5;
+				--color-accent-hover: #1c36df;
+				--color-on-accent: #ffffff;
+				--color-accent-ring: color-mix(in srgb, var(--color-accent) 25%, transparent);
 
 				/* EmDash search theming */
 				--emdash-search-bg: var(--color-bg);
@@ -147,14 +136,41 @@ const pageCtx = createPublicPageContext({
 				--emdash-search-hover: var(--color-surface);
 				--emdash-search-highlight: var(--color-text);
 
+				/* Signature gradients used site-wide */
+				--gradient-cta: linear-gradient(
+					135deg,
+					#354ff5 0%,
+					#5338f5 45%,
+					#d220ff 100%
+				);
+				--gradient-cta-hover: linear-gradient(
+					135deg,
+					#1c36df 0%,
+					#3a1fdb 45%,
+					#b818e0 100%
+				);
+				--gradient-hero: radial-gradient(
+						ellipse at top right,
+						rgba(53, 79, 245, 0.45) 0%,
+						transparent 50%
+					),
+					radial-gradient(
+						ellipse at bottom left,
+						rgba(210, 32, 255, 0.25) 0%,
+						transparent 50%
+					),
+					linear-gradient(135deg, #0a1a2d 0%, #12263a 50%, #1a3151 100%);
+
 				/* Typography */
 				--font-sans:
-					"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-					sans-serif;
+					"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+					"Helvetica Neue", Arial, sans-serif;
+				--font-heading:
+					"Roboto Slab", Georgia, "Times New Roman", serif;
 				--font-mono:
-					"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+					ui-monospace, SFMono-Regular, Menlo, monospace;
 
-				/* Type scale - more refined */
+				/* Type scale */
 				--font-size-xs: 0.8125rem;
 				--font-size-sm: 0.875rem;
 				--font-size-base: 1rem;
@@ -171,7 +187,7 @@ const pageCtx = createPublicPageContext({
 				--leading-normal: 1.5;
 				--leading-relaxed: 1.7;
 
-				/* Spacing - more generous */
+				/* Spacing */
 				--spacing-1: 0.25rem;
 				--spacing-2: 0.5rem;
 				--spacing-3: 0.75rem;
@@ -184,8 +200,6 @@ const pageCtx = createPublicPageContext({
 				--spacing-16: 4rem;
 				--spacing-20: 5rem;
 				--spacing-24: 6rem;
-
-				/* Legacy spacing aliases */
 				--spacing-xs: var(--spacing-1);
 				--spacing-sm: var(--spacing-2);
 				--spacing-md: var(--spacing-4);
@@ -194,20 +208,22 @@ const pageCtx = createPublicPageContext({
 				--spacing-2xl: var(--spacing-12);
 				--spacing-3xl: var(--spacing-16);
 
-				/* Layout - wider for three-column */
-				--content-width: 680px;
+				/* Layout */
+				--content-width: 720px;
 				--wide-width: 1200px;
 				--max-width: var(--content-width);
 				--gutter-width: 200px;
 				--radius: 4px;
-				--radius-lg: 8px;
+				--radius-md: 12px;
+				--radius-lg: 20px;
+				--radius-btn: 34px;
 
 				/* Transitions */
 				--transition-fast: 120ms ease;
 				--transition-base: 180ms ease;
 
 				/* Nav */
-				--nav-height: 64px;
+				--nav-height: 68px;
 
 				/* Search */
 				--search-input-width: 180px;
@@ -219,7 +235,7 @@ const pageCtx = createPublicPageContext({
 				--avatar-size-xs: 18px;
 				--avatar-size-sm: 20px;
 				--avatar-size-md: 24px;
-				--avatar-size-lg: 32px;
+				--avatar-size-lg: 48px;
 
 				/* Letter spacing */
 				--tracking-tight: -0.03em;
@@ -227,42 +243,20 @@ const pageCtx = createPublicPageContext({
 				--tracking-wide: 0.06em;
 				--tracking-wider: 0.08em;
 
-				/* Tag pill */
-				--tag-padding-y: 2px;
-
 				/* Shadows */
-				--shadow-dropdown: 0 8px 30px rgba(0, 0, 0, 0.12);
-				--shadow-btn-active: 0 1px 2px rgba(0, 0, 0, 0.05);
-			}
-
-			/* Dark mode via system preference (when no explicit class) */
-			@media (prefers-color-scheme: dark) {
-				:root:not(.light) {
-					--color-bg: #0d0d0d;
-					--color-bg-subtle: #141414;
-					--color-text: #ededed;
-					--color-text-secondary: #a0a0a0;
-					--color-muted: #6b6b6b;
-					--color-border: #2a2a2a;
-					--color-border-subtle: #1f1f1f;
-					--color-surface: #181818;
-					--color-accent: #4d9fff;
-					--color-accent-hover: #6eb0ff;
-				}
-			}
-
-			/* Explicit dark mode */
-			:root.dark {
-				--color-bg: #0d0d0d;
-				--color-bg-subtle: #141414;
-				--color-text: #ededed;
-				--color-text-secondary: #a0a0a0;
-				--color-muted: #6b6b6b;
-				--color-border: #2a2a2a;
-				--color-border-subtle: #1f1f1f;
-				--color-surface: #181818;
-				--color-accent: #4d9fff;
-				--color-accent-hover: #6eb0ff;
+				--shadow-card:
+					0 4px 24px rgba(18, 38, 58, 0.08),
+					0 1px 3px rgba(18, 38, 58, 0.05);
+				--shadow-card-hover:
+					0 12px 36px rgba(18, 38, 58, 0.14),
+					0 4px 12px rgba(18, 38, 58, 0.08);
+				--shadow-cta:
+					0 6px 20px rgba(53, 79, 245, 0.35),
+					0 2px 6px rgba(210, 32, 255, 0.15);
+				--shadow-cta-hover:
+					0 14px 32px rgba(53, 79, 245, 0.45),
+					0 4px 12px rgba(210, 32, 255, 0.2);
+				--shadow-dropdown: 0 8px 30px rgba(18, 38, 58, 0.12);
 			}
 
 			html {
@@ -271,23 +265,13 @@ const pageCtx = createPublicPageContext({
 
 			body {
 				font-family: var(--font-sans);
-				font-size: var(--font-size-base);
+				font-size: 17px;
 				line-height: var(--leading-relaxed);
 				color: var(--color-text);
 				background: var(--color-bg);
 				-webkit-font-smoothing: antialiased;
 				-moz-osx-font-smoothing: grayscale;
 				min-height: 100vh;
-			}
-
-			a:where(:not([class*="emdash"]):not([class*="ec-"])) {
-				color: var(--color-accent);
-				text-decoration: none;
-				transition: color var(--transition-fast);
-			}
-
-			a:where(:not([class*="emdash"]):not([class*="ec-"])):hover {
-				color: var(--color-accent-hover);
 			}
 
 			img {
@@ -302,23 +286,142 @@ const pageCtx = createPublicPageContext({
 			h4,
 			h5,
 			h6 {
-				font-family: var(--font-heading, var(--font-sans));
+				font-family: var(--font-heading);
 				line-height: var(--leading-tight);
 				font-weight: 700;
 				letter-spacing: var(--tracking-snug);
+				color: var(--color-text);
 			}
 
 			h1 {
-				font-weight: 700;
 				letter-spacing: var(--tracking-tight);
 			}
 
+			a:where(:not([class*="emdash"]):not([class*="ec-"])) {
+				color: var(--color-accent);
+				text-decoration: none;
+				transition: color var(--transition-fast);
+			}
+
+			a:where(:not([class*="emdash"]):not([class*="ec-"])):hover {
+				color: var(--color-accent-hover);
+			}
+
 			::selection {
-				background: var(--color-accent);
+				background: var(--color-blue);
 				color: white;
 			}
-		</style>
 
+			/* === Global Adelia Risk button system === */
+			.ar-btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+				padding: 1rem 2rem;
+				font-family: var(--font-sans);
+				font-size: 1rem;
+				font-weight: 700;
+				text-decoration: none;
+				border: none;
+				border-radius: var(--radius-btn);
+				cursor: pointer;
+				transition:
+					transform 200ms ease,
+					box-shadow 200ms ease,
+					background 200ms ease,
+					color 200ms ease;
+				white-space: nowrap;
+				line-height: 1;
+			}
+
+			.ar-btn-primary {
+				color: var(--color-on-accent);
+				background: var(--gradient-cta);
+				box-shadow: var(--shadow-cta);
+			}
+
+			.ar-btn-primary:hover {
+				transform: translateY(-2px);
+				background: var(--gradient-cta-hover);
+				box-shadow: var(--shadow-cta-hover);
+				color: var(--color-on-accent);
+			}
+
+			.ar-btn-ghost {
+				color: var(--color-on-accent);
+				background: transparent;
+				border: 2px solid rgba(255, 255, 255, 0.4);
+			}
+
+			.ar-btn-ghost:hover {
+				background: rgba(255, 255, 255, 0.1);
+				border-color: var(--color-on-accent);
+				color: var(--color-on-accent);
+			}
+
+			.ar-btn-outline {
+				color: var(--color-blue);
+				background: var(--color-bg);
+				border: 2px solid var(--color-blue);
+			}
+
+			.ar-btn-outline:hover {
+				color: var(--color-on-accent);
+				background: var(--color-blue);
+			}
+
+			/* === Layout utilities === */
+			.ar-container {
+				max-width: var(--wide-width);
+				margin: 0 auto;
+				padding: 0 clamp(1.25rem, 3vw, 2rem);
+			}
+
+			.ar-container-narrow {
+				max-width: 880px;
+				margin: 0 auto;
+				padding: 0 clamp(1.25rem, 3vw, 2rem);
+			}
+
+			.ar-section {
+				padding: clamp(4rem, 8vw, 7rem) 0;
+			}
+
+			.ar-section-tight {
+				padding: clamp(3rem, 6vw, 5rem) 0;
+			}
+
+			.ar-section-dark {
+				background: var(--gradient-hero);
+				color: var(--color-on-accent);
+				position: relative;
+			}
+
+			.ar-section-dark :is(h1, h2, h3, h4, h5, h6) {
+				color: var(--color-on-accent);
+			}
+
+			.ar-section-tinted {
+				background: var(--color-bg-subtle);
+			}
+
+			/* Eyebrow label — used above section headings */
+			.ar-eyebrow {
+				display: inline-block;
+				font-family: var(--font-sans);
+				font-size: 0.8125rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				color: var(--color-blue);
+				margin-bottom: 1rem;
+			}
+
+			.ar-section-dark .ar-eyebrow {
+				color: #8faaff;
+			}
+		</style>
 
 		<script>
 			// ⌘K / Ctrl+K to focus search

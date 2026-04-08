@@ -1,0 +1,119 @@
+---
+interface Props {
+	eyebrow?: string;
+	title: string;
+	subtitle?: string;
+	items: string[];
+	columns?: 3 | 4;
+}
+
+const { eyebrow, title, subtitle, items, columns = 4 } = Astro.props;
+---
+
+<section class="c-fgrid ar-section ar-section-tinted">
+	<div class="ar-container">
+		<header class="c-fgrid-header">
+			{eyebrow && <span class="ar-eyebrow">{eyebrow}</span>}
+			<h2 class="c-fgrid-title">{title}</h2>
+			{subtitle && <p class="c-fgrid-subtitle">{subtitle}</p>}
+		</header>
+		<ul class={`c-fgrid-list c-fgrid-cols-${columns}`}>
+			{items.map((item) => (
+				<li class="c-fgrid-item">
+					<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+						<circle cx="10" cy="10" r="10" fill="#354ff5" fill-opacity="0.12"/>
+						<path d="M6 10l3 3 5-6" stroke="#354ff5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+					<span>{item}</span>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.c-fgrid-header {
+		max-width: 760px;
+		margin: 0 auto 3rem;
+		text-align: center;
+	}
+
+	.c-fgrid-title {
+		font-family: var(--font-heading);
+		font-size: clamp(1.75rem, 3vw, 2.625rem);
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: var(--color-text);
+		margin: 0 0 1rem;
+		font-weight: 700;
+	}
+
+	.c-fgrid-subtitle {
+		font-size: 1.0625rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.c-fgrid-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 1rem;
+	}
+
+	.c-fgrid-cols-4 {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.c-fgrid-cols-3 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.c-fgrid-item {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		background: var(--color-bg);
+		border-radius: var(--radius-md);
+		padding: 1rem 1.25rem;
+		box-shadow: var(--shadow-card);
+		font-size: 0.9375rem;
+		line-height: 1.4;
+		color: var(--color-text);
+		transition:
+			transform 180ms ease,
+			box-shadow 180ms ease;
+	}
+
+	.c-fgrid-item:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-card-hover);
+	}
+
+	.c-fgrid-item svg {
+		flex-shrink: 0;
+		margin-top: 0.125rem;
+	}
+
+	@media (max-width: 960px) {
+		.c-fgrid-cols-4 {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@media (max-width: 720px) {
+		.c-fgrid-cols-4,
+		.c-fgrid-cols-3 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 520px) {
+		.c-fgrid-cols-4,
+		.c-fgrid-cols-3 {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

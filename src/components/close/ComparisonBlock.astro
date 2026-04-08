@@ -1,0 +1,266 @@
+---
+interface Column {
+	title: string;
+	items: string[];
+	tone?: "danger" | "positive" | "neutral";
+}
+
+interface Props {
+	eyebrow?: string;
+	title: string;
+	subtitle?: string;
+	footnote?: string;
+	left: Column;
+	right: Column;
+	dark?: boolean;
+}
+
+const {
+	eyebrow,
+	title,
+	subtitle,
+	footnote,
+	left,
+	right,
+	dark = false,
+} = Astro.props;
+---
+
+<section class={`c-cmp ar-section ${dark ? "c-cmp-dark" : "ar-section-tinted"}`}>
+	<div class="ar-container">
+		<header class="c-cmp-header">
+			{eyebrow && <span class="ar-eyebrow">{eyebrow}</span>}
+			<h2 class="c-cmp-title">{title}</h2>
+			{subtitle && <p class="c-cmp-subtitle">{subtitle}</p>}
+		</header>
+		<div class="c-cmp-grid">
+			<div class={`c-cmp-col c-cmp-col-${left.tone || "neutral"}`}>
+				<h3 class="c-cmp-col-title">{left.title}</h3>
+				<ul class="c-cmp-list">
+					{left.items.map((item) => (
+						<li>
+							<svg class="c-cmp-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+								<circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+								<path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<span>{item}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+			<div class="c-cmp-vs" aria-hidden="true">VS</div>
+			<div class={`c-cmp-col c-cmp-col-${right.tone || "neutral"}`}>
+				<h3 class="c-cmp-col-title">{right.title}</h3>
+				<ul class="c-cmp-list">
+					{right.items.map((item) => (
+						<li>
+							<svg class="c-cmp-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+								<circle cx="10" cy="10" r="9" fill="#354ff5" fill-opacity="0.15" stroke="currentColor" stroke-width="2"/>
+								<path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<span>{item}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+		</div>
+		{footnote && <p class="c-cmp-footnote">{footnote}</p>}
+	</div>
+</section>
+
+<style>
+	.c-cmp-dark {
+		background: var(--gradient-hero);
+		color: var(--color-on-accent);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.c-cmp-dark::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+		background-size: 32px 32px;
+		pointer-events: none;
+	}
+
+	.c-cmp-header {
+		max-width: 820px;
+		margin: 0 auto 3rem;
+		text-align: center;
+		position: relative;
+		z-index: 1;
+	}
+
+	.c-cmp-title {
+		font-family: var(--font-heading);
+		font-size: clamp(1.75rem, 3vw, 2.625rem);
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: inherit;
+		margin: 0 0 1rem;
+		font-weight: 700;
+	}
+
+	.c-cmp-dark .c-cmp-title {
+		color: var(--color-on-accent);
+	}
+
+	.c-cmp-subtitle {
+		font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.c-cmp-dark .c-cmp-subtitle {
+		color: rgba(255, 255, 255, 0.82);
+	}
+
+	.c-cmp-grid {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		gap: clamp(1rem, 2vw, 2rem);
+		align-items: stretch;
+		position: relative;
+		z-index: 1;
+	}
+
+	.c-cmp-col {
+		background: var(--color-bg);
+		border-radius: var(--radius-lg);
+		padding: 2.25rem 2rem 2.5rem;
+		box-shadow: var(--shadow-card);
+	}
+
+	.c-cmp-dark .c-cmp-col {
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		box-shadow: none;
+	}
+
+	.c-cmp-col-danger {
+		--cmp-accent: #e4476b;
+	}
+
+	.c-cmp-col-positive {
+		--cmp-accent: #354ff5;
+	}
+
+	.c-cmp-col-neutral {
+		--cmp-accent: var(--color-muted);
+	}
+
+	.c-cmp-col-title {
+		font-family: var(--font-heading);
+		font-size: 1.5rem;
+		color: var(--color-text);
+		margin: 0 0 1.5rem;
+		padding-bottom: 1rem;
+		border-bottom: 2px solid var(--cmp-accent, var(--color-border));
+		font-weight: 700;
+		display: inline-block;
+	}
+
+	.c-cmp-dark .c-cmp-col-title {
+		color: var(--color-on-accent);
+	}
+
+	.c-cmp-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.875rem;
+	}
+
+	.c-cmp-list li {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		font-size: 1rem;
+		line-height: 1.5;
+		color: var(--color-text);
+	}
+
+	.c-cmp-dark .c-cmp-list li {
+		color: rgba(255, 255, 255, 0.92);
+	}
+
+	.c-cmp-col-danger .c-cmp-list li .c-cmp-icon {
+		color: #e4476b;
+	}
+
+	.c-cmp-col-positive .c-cmp-list li .c-cmp-icon {
+		color: #354ff5;
+	}
+
+	.c-cmp-col-neutral .c-cmp-list li .c-cmp-icon {
+		color: var(--color-muted);
+	}
+
+	.c-cmp-dark .c-cmp-col-positive .c-cmp-list li .c-cmp-icon {
+		color: #8faaff;
+	}
+
+	.c-cmp-dark .c-cmp-col-danger .c-cmp-list li .c-cmp-icon {
+		color: #ff7a9c;
+	}
+
+	.c-cmp-icon {
+		flex-shrink: 0;
+		margin-top: 0.15rem;
+	}
+
+	.c-cmp-vs {
+		align-self: center;
+		font-family: var(--font-heading);
+		font-size: 1rem;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		color: var(--color-muted);
+		background: var(--color-bg);
+		border: 2px solid var(--color-border);
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.c-cmp-dark .c-cmp-vs {
+		background: var(--color-navy);
+		border-color: rgba(255, 255, 255, 0.2);
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	.c-cmp-footnote {
+		max-width: 820px;
+		margin: 2.5rem auto 0;
+		text-align: center;
+		font-size: 1.0625rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		font-style: italic;
+		position: relative;
+		z-index: 1;
+	}
+
+	.c-cmp-dark .c-cmp-footnote {
+		color: rgba(255, 255, 255, 0.72);
+	}
+
+	@media (max-width: 860px) {
+		.c-cmp-grid {
+			grid-template-columns: 1fr;
+		}
+		.c-cmp-vs {
+			justify-self: center;
+		}
+	}
+</style>
