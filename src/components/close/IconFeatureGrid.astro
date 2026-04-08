@@ -1,6 +1,6 @@
 ---
 interface Feature {
-	icon: string; // svg path d=""
+	icon?: string; // svg path d="" (optional)
 	title: string;
 	description: string;
 }
@@ -11,9 +11,17 @@ interface Props {
 	subtitle?: string;
 	features: Feature[];
 	tinted?: boolean;
+	columns?: 2 | 3;
 }
 
-const { eyebrow, title, subtitle, features, tinted = false } = Astro.props;
+const {
+	eyebrow,
+	title,
+	subtitle,
+	features,
+	tinted = false,
+	columns = 3,
+} = Astro.props;
 ---
 
 <section class={`c-feat ${tinted ? "c-feat-tinted" : ""}`}>
@@ -25,14 +33,16 @@ const { eyebrow, title, subtitle, features, tinted = false } = Astro.props;
 				{subtitle && <p class="c-feat-subtitle">{subtitle}</p>}
 			</header>
 		)}
-		<div class="c-feat-grid">
+		<div class={`c-feat-grid c-feat-cols-${columns}`}>
 			{features.map((f) => (
 				<article class="c-feat-card">
-					<div class="c-feat-icon">
-						<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d={f.icon} />
-						</svg>
-					</div>
+					{f.icon && (
+						<div class="c-feat-icon">
+							<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d={f.icon} />
+							</svg>
+						</div>
+					)}
 					<h3 class="c-feat-card-title">{f.title}</h3>
 					<p class="c-feat-card-desc">{f.description}</p>
 				</article>
@@ -76,8 +86,15 @@ const { eyebrow, title, subtitle, features, tinted = false } = Astro.props;
 
 	.c-feat-grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
 		gap: clamp(1.25rem, 2vw, 2rem);
+	}
+
+	.c-feat-cols-3 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.c-feat-cols-2 {
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	.c-feat-card {
@@ -124,7 +141,8 @@ const { eyebrow, title, subtitle, features, tinted = false } = Astro.props;
 	}
 
 	@media (max-width: 880px) {
-		.c-feat-grid {
+		.c-feat-cols-3,
+		.c-feat-cols-2 {
 			grid-template-columns: 1fr;
 		}
 	}
