@@ -1,0 +1,188 @@
+/*
+ * Close variant — pixel-faithful to adeliarisk.com
+ *
+ * Brand palette extracted from the live Elementor global kit.
+ * Scope variables to .variant-close on the preview page root so
+ * they don't leak into the baseline theme.
+ */
+
+.variant-close {
+	/* Core palette */
+	--close-blue: #354ff5;
+	--close-blue-hover: #1c36df;
+	--close-magenta: #d220ff;
+	--close-navy: #12263a;
+	--close-navy-deep: #0a1a2d;
+	--close-navy-light: #1a3151;
+	--close-white: #ffffff;
+	--close-ink: #12263a;
+	--close-ink-soft: #475770;
+	--close-muted: #8a93a8;
+	--close-border: #e1e5f2;
+	--close-border-soft: #eef1f9;
+	--close-surface: #f9faff;
+	--close-surface-alt: #f3f5ff;
+
+	/* Signature gradients */
+	--close-grad-cta: linear-gradient(135deg, #354ff5 0%, #5338f5 45%, #d220ff 100%);
+	--close-grad-cta-hover: linear-gradient(135deg, #1c36df 0%, #3a1fdb 45%, #b818e0 100%);
+	--close-grad-hero: linear-gradient(135deg, #12263a 0%, #1a3151 40%, #1c36df 100%);
+	--close-grad-hero-mesh: radial-gradient(
+			ellipse at top right,
+			rgba(53, 79, 245, 0.45) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			ellipse at bottom left,
+			rgba(210, 32, 255, 0.25) 0%,
+			transparent 50%
+		),
+		linear-gradient(135deg, #0a1a2d 0%, #12263a 50%, #1a3151 100%);
+
+	/* Type scale */
+	--close-font-heading: "Roboto Slab", Georgia, "Times New Roman", serif;
+	--close-font-body: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+		sans-serif;
+	--close-h1: clamp(2.25rem, 4.5vw, 3.75rem);
+	--close-h2: clamp(1.75rem, 3vw, 2.625rem);
+	--close-h3: clamp(1.25rem, 2vw, 1.625rem);
+	--close-lead: clamp(1.125rem, 1.5vw, 1.3125rem);
+	--close-body: 1.0625rem;
+	--close-small: 0.9375rem;
+
+	/* Shape */
+	--close-radius-btn: 34px;
+	--close-radius-card: 20px;
+	--close-radius-sm: 8px;
+
+	/* Depth */
+	--close-shadow-card: 0 4px 24px rgba(18, 38, 58, 0.08),
+		0 1px 3px rgba(18, 38, 58, 0.05);
+	--close-shadow-card-hover: 0 12px 36px rgba(18, 38, 58, 0.14),
+		0 4px 12px rgba(18, 38, 58, 0.08);
+	--close-shadow-cta: 0 6px 20px rgba(53, 79, 245, 0.35),
+		0 2px 6px rgba(210, 32, 255, 0.15);
+	--close-shadow-cta-hover: 0 14px 32px rgba(53, 79, 245, 0.45),
+		0 4px 12px rgba(210, 32, 255, 0.2);
+
+	/* Layout */
+	--close-container: 1200px;
+	--close-container-narrow: 880px;
+	--close-gutter: clamp(1.25rem, 3vw, 2.5rem);
+	--close-section-y: clamp(4rem, 8vw, 7rem);
+
+	/* Base */
+	color: var(--close-ink);
+	font-family: var(--close-font-body);
+	font-size: var(--close-body);
+	line-height: 1.7;
+	background: var(--close-white);
+}
+
+/* Apply variant fonts to all content inside */
+.variant-close :is(h1, h2, h3, h4, h5, h6) {
+	font-family: var(--close-font-heading);
+	color: var(--close-ink);
+	line-height: 1.15;
+	letter-spacing: -0.015em;
+	font-weight: 700;
+	margin: 0;
+}
+
+/* Button system */
+.close-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 1rem 2rem;
+	font-family: var(--close-font-body);
+	font-size: 1rem;
+	font-weight: 700;
+	text-decoration: none;
+	border: none;
+	border-radius: var(--close-radius-btn);
+	cursor: pointer;
+	transition:
+		transform 200ms ease,
+		box-shadow 200ms ease;
+	white-space: nowrap;
+}
+
+.close-btn-primary {
+	color: var(--close-white);
+	background: var(--close-grad-cta);
+	box-shadow: var(--close-shadow-cta);
+}
+
+.close-btn-primary:hover {
+	transform: translateY(-2px);
+	background: var(--close-grad-cta-hover);
+	box-shadow: var(--close-shadow-cta-hover);
+}
+
+.close-btn-ghost {
+	color: var(--close-white);
+	background: transparent;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.close-btn-ghost:hover {
+	background: rgba(255, 255, 255, 0.1);
+	border-color: var(--close-white);
+}
+
+.close-btn-on-light {
+	color: var(--close-blue);
+	background: var(--close-white);
+	border: 2px solid var(--close-blue);
+}
+
+.close-btn-on-light:hover {
+	color: var(--close-white);
+	background: var(--close-blue);
+}
+
+/* Section wrappers */
+.close-section {
+	padding: var(--close-section-y) var(--close-gutter);
+}
+
+.close-section-dark {
+	background: var(--close-navy);
+	color: var(--close-white);
+}
+
+.close-section-dark :is(h1, h2, h3, h4, h5, h6) {
+	color: var(--close-white);
+}
+
+.close-section-tinted {
+	background: var(--close-surface);
+}
+
+.close-container {
+	max-width: var(--close-container);
+	margin: 0 auto;
+}
+
+.close-container-narrow {
+	max-width: var(--close-container-narrow);
+	margin: 0 auto;
+}
+
+/* Eyebrow label */
+.close-eyebrow {
+	display: inline-block;
+	font-family: var(--close-font-body);
+	font-size: 0.8125rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--close-blue);
+	margin-bottom: 1rem;
+}
+
+.close-section-dark .close-eyebrow {
+	color: #8faaff;
+}

@@ -1,0 +1,219 @@
+/*
+ * Tasteful variant — Editorial-Confident Enterprise Trust
+ *
+ * Your brand reimagined through the lens of a senior B2B editorial
+ * studio. Navy stays because it's yours. Cream replaces white for
+ * warmth. Blue is the sharp accent, not a dominant field. Magenta
+ * is dropped entirely. Headings are ALL serif (Roboto Slab 700) so
+ * the type becomes the distinctive thing. Buttons are squared, not
+ * pilled. Stats are giant serif numerals. Rules are hairlines.
+ */
+
+.variant-tasteful {
+	/* Core palette — restrained, confident */
+	--t-navy: #0b1c2e;
+	--t-navy-soft: #1b2e44;
+	--t-cream: #f7f3ec;
+	--t-cream-deep: #efe8dd;
+	--t-ink: #0b1c2e;
+	--t-ink-soft: #4a5568;
+	--t-muted: #8b93a0;
+	--t-rule: #1b2e44;
+	--t-rule-soft: rgba(11, 28, 46, 0.12);
+	--t-accent: #354ff5;
+	--t-accent-hover: #1c36df;
+	--t-highlight: #ffd466; /* warm flag, used very sparingly */
+
+	/* Type */
+	--t-font-display: "Roboto Slab", "Charter", Georgia, serif;
+	--t-font-body: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+		sans-serif;
+
+	/* Editorial scale — larger headline / tighter body than close */
+	--t-h1: clamp(2.5rem, 6vw, 5rem);
+	--t-h2: clamp(1.875rem, 4vw, 3.25rem);
+	--t-h3: clamp(1.25rem, 2vw, 1.625rem);
+	--t-lead: clamp(1.125rem, 1.4vw, 1.375rem);
+	--t-body: 1.0625rem;
+	--t-stat: clamp(3.5rem, 9vw, 7rem);
+
+	/* Shape — squared, not pilled */
+	--t-radius: 2px;
+	--t-radius-lg: 4px;
+
+	/* Layout — narrower reading column, generous margins */
+	--t-container: 1160px;
+	--t-container-narrow: 720px;
+	--t-gutter: clamp(1.5rem, 4vw, 4rem);
+	--t-section-y: clamp(5rem, 10vw, 9rem);
+
+	color: var(--t-ink);
+	font-family: var(--t-font-body);
+	font-size: var(--t-body);
+	line-height: 1.65;
+	background: var(--t-cream);
+	-webkit-font-smoothing: antialiased;
+}
+
+.variant-tasteful :is(h1, h2, h3, h4, h5, h6) {
+	font-family: var(--t-font-display);
+	color: var(--t-ink);
+	line-height: 1.08;
+	letter-spacing: -0.025em;
+	font-weight: 700;
+	margin: 0;
+}
+
+/* Type utility classes */
+.variant-tasteful .t-h1 {
+	font-size: var(--t-h1);
+}
+.variant-tasteful .t-h2 {
+	font-size: var(--t-h2);
+}
+.variant-tasteful .t-lead {
+	font-size: var(--t-lead);
+	line-height: 1.5;
+	color: var(--t-ink-soft);
+	font-weight: 400;
+}
+
+/* Editorial eyebrow: tiny caps with a leading rule */
+.t-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	font-family: var(--t-font-body);
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	color: var(--t-ink-soft);
+	margin-bottom: 1.5rem;
+}
+
+.t-eyebrow::before {
+	content: "";
+	display: block;
+	width: 2rem;
+	height: 1px;
+	background: currentColor;
+}
+
+/* Numeric labels — for section numbering (editorial) */
+.t-section-number {
+	font-family: var(--t-font-display);
+	font-size: 0.875rem;
+	font-weight: 700;
+	color: var(--t-accent);
+	letter-spacing: 0.04em;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Squared buttons, not pilled */
+.t-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 1.125rem 2rem;
+	font-family: var(--t-font-body);
+	font-size: 0.9375rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	text-decoration: none;
+	border: none;
+	border-radius: var(--t-radius);
+	cursor: pointer;
+	transition:
+		transform 180ms ease,
+		background 180ms ease,
+		color 180ms ease,
+		border-color 180ms ease;
+}
+
+.t-btn-primary {
+	background: var(--t-ink);
+	color: var(--t-cream);
+	border: 1px solid var(--t-ink);
+}
+
+.t-btn-primary:hover {
+	background: var(--t-accent);
+	border-color: var(--t-accent);
+	color: #ffffff;
+}
+
+.t-btn-ghost-dark {
+	background: transparent;
+	color: var(--t-ink);
+	border: 1px solid var(--t-ink);
+}
+
+.t-btn-ghost-dark:hover {
+	background: var(--t-ink);
+	color: var(--t-cream);
+}
+
+.t-btn-ghost-light {
+	background: transparent;
+	color: var(--t-cream);
+	border: 1px solid rgba(247, 243, 236, 0.4);
+}
+
+.t-btn-ghost-light:hover {
+	background: var(--t-cream);
+	color: var(--t-ink);
+	border-color: var(--t-cream);
+}
+
+.t-btn .t-btn-arrow {
+	display: inline-block;
+	transition: transform 180ms ease;
+}
+
+.t-btn:hover .t-btn-arrow {
+	transform: translateX(4px);
+}
+
+/* Section wrappers */
+.t-section {
+	padding: var(--t-section-y) var(--t-gutter);
+}
+
+.t-section-dark {
+	background: var(--t-navy);
+	color: var(--t-cream);
+}
+
+.t-section-dark :is(h1, h2, h3, h4, h5, h6) {
+	color: var(--t-cream);
+}
+
+.t-section-dark .t-lead {
+	color: rgba(247, 243, 236, 0.72);
+}
+
+.t-section-dark .t-eyebrow {
+	color: rgba(247, 243, 236, 0.6);
+}
+
+.t-container {
+	max-width: var(--t-container);
+	margin: 0 auto;
+}
+
+.t-container-narrow {
+	max-width: var(--t-container-narrow);
+	margin: 0 auto;
+}
+
+/* Hairline rule — editorial signature */
+.t-rule {
+	border: none;
+	border-top: 1px solid var(--t-rule-soft);
+	margin: 0;
+}
+
+.t-section-dark .t-rule {
+	border-top-color: rgba(247, 243, 236, 0.15);
+}

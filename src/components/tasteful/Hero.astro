@@ -1,0 +1,216 @@
+---
+interface Props {
+	eyebrow?: string;
+	title: string;
+	titleAccent?: string; // highlighted word/phrase (optional)
+	subtitle?: string;
+	ctaLabel?: string;
+	ctaHref?: string;
+	secondaryCtaLabel?: string;
+	secondaryCtaHref?: string;
+	meta?: string; // small detail text (e.g., "For SEC-registered advisors")
+}
+
+const {
+	eyebrow,
+	title,
+	titleAccent,
+	subtitle,
+	ctaLabel,
+	ctaHref = "#",
+	secondaryCtaLabel,
+	secondaryCtaHref = "#",
+	meta,
+} = Astro.props;
+---
+
+<section class="t-hero">
+	<div class="t-hero-inner">
+		<div class="t-hero-grid">
+			<div class="t-hero-meta">
+				{meta && (
+					<>
+						<div class="t-hero-meta-rule"></div>
+						<p class="t-hero-meta-text">{meta}</p>
+					</>
+				)}
+			</div>
+			<div class="t-hero-copy">
+				{eyebrow && <span class="t-eyebrow">{eyebrow}</span>}
+				<h1 class="t-hero-title">
+					{title}
+					{titleAccent && (
+						<>
+							{" "}
+							<em class="t-hero-title-accent">{titleAccent}</em>
+						</>
+					)}
+				</h1>
+				{subtitle && <p class="t-hero-subtitle">{subtitle}</p>}
+				{(ctaLabel || secondaryCtaLabel) && (
+					<div class="t-hero-ctas">
+						{ctaLabel && (
+							<a href={ctaHref} class="t-btn t-btn-ghost-light">
+								{ctaLabel}
+								<span class="t-btn-arrow">→</span>
+							</a>
+						)}
+						{secondaryCtaLabel && (
+							<a href={secondaryCtaHref} class="t-hero-link">
+								{secondaryCtaLabel}
+								<span>→</span>
+							</a>
+						)}
+					</div>
+				)}
+			</div>
+		</div>
+	</div>
+	<div class="t-hero-glyph" aria-hidden="true">§</div>
+</section>
+
+<style>
+	.t-hero {
+		position: relative;
+		background: var(--t-navy);
+		color: var(--t-cream);
+		padding: clamp(6rem, 12vw, 11rem) var(--t-gutter) clamp(5rem, 10vw, 8rem);
+		overflow: hidden;
+	}
+
+	.t-hero::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image:
+			radial-gradient(circle at 1px 1px, rgba(247, 243, 236, 0.05) 1px, transparent 0);
+		background-size: 32px 32px;
+		pointer-events: none;
+	}
+
+	.t-hero-inner {
+		position: relative;
+		max-width: var(--t-container);
+		margin: 0 auto;
+	}
+
+	.t-hero-grid {
+		display: grid;
+		grid-template-columns: 200px 1fr;
+		gap: clamp(2rem, 5vw, 5rem);
+		align-items: start;
+	}
+
+	.t-hero-meta {
+		padding-top: 0.5rem;
+	}
+
+	.t-hero-meta-rule {
+		width: 48px;
+		height: 1px;
+		background: rgba(247, 243, 236, 0.4);
+		margin-bottom: 1rem;
+	}
+
+	.t-hero-meta-text {
+		font-family: var(--t-font-body);
+		font-size: 0.8125rem;
+		line-height: 1.5;
+		color: rgba(247, 243, 236, 0.6);
+		margin: 0;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	.t-hero-copy {
+		max-width: 920px;
+	}
+
+	.t-hero-title {
+		font-family: var(--t-font-display);
+		font-size: var(--t-h1);
+		line-height: 0.95;
+		letter-spacing: -0.03em;
+		color: var(--t-cream);
+		margin: 0 0 2rem;
+		font-weight: 700;
+	}
+
+	.t-hero-title-accent {
+		font-style: italic;
+		font-weight: 400;
+		color: var(--t-accent);
+		position: relative;
+	}
+
+	.t-hero-subtitle {
+		font-family: var(--t-font-body);
+		font-size: var(--t-lead);
+		line-height: 1.55;
+		color: rgba(247, 243, 236, 0.78);
+		max-width: 680px;
+		margin: 0 0 2.5rem;
+		font-weight: 400;
+	}
+
+	.t-hero-ctas {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		flex-wrap: wrap;
+	}
+
+	.t-hero-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-family: var(--t-font-body);
+		font-size: 0.9375rem;
+		font-weight: 500;
+		letter-spacing: 0.02em;
+		color: rgba(247, 243, 236, 0.72);
+		text-decoration: none;
+		text-transform: uppercase;
+		padding: 1.125rem 0;
+		transition: color 180ms ease;
+	}
+
+	.t-hero-link:hover {
+		color: var(--t-cream);
+	}
+
+	.t-hero-link span {
+		transition: transform 180ms ease;
+	}
+
+	.t-hero-link:hover span {
+		transform: translateX(4px);
+	}
+
+	.t-eyebrow {
+		color: rgba(247, 243, 236, 0.65);
+	}
+
+	/* Decorative serif glyph anchoring bottom-right — distinctive mark */
+	.t-hero-glyph {
+		position: absolute;
+		right: -2rem;
+		bottom: -6rem;
+		font-family: var(--t-font-display);
+		font-size: clamp(20rem, 35vw, 40rem);
+		line-height: 0.8;
+		color: rgba(53, 79, 245, 0.12);
+		font-weight: 700;
+		pointer-events: none;
+		user-select: none;
+	}
+
+	@media (max-width: 860px) {
+		.t-hero-grid {
+			grid-template-columns: 1fr;
+		}
+		.t-hero-meta {
+			padding-top: 0;
+		}
+	}
+</style>

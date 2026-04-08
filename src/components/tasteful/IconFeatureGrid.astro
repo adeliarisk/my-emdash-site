@@ -1,0 +1,159 @@
+---
+interface Feature {
+	icon: string;
+	title: string;
+	description: string;
+}
+
+interface Props {
+	eyebrow?: string;
+	title?: string;
+	subtitle?: string;
+	features: Feature[];
+}
+
+const { eyebrow, title, subtitle, features } = Astro.props;
+---
+
+<section class="t-feat t-section">
+	<div class="t-container">
+		{(eyebrow || title || subtitle) && (
+			<header class="t-feat-header">
+				<div class="t-feat-meta">
+					{eyebrow && <span class="t-eyebrow">{eyebrow}</span>}
+				</div>
+				<div class="t-feat-intro">
+					{title && <h2 class="t-feat-title">{title}</h2>}
+					{subtitle && <p class="t-lead t-feat-subtitle">{subtitle}</p>}
+				</div>
+			</header>
+		)}
+		<hr class="t-rule" />
+		<div class="t-feat-grid">
+			{features.map((f, i) => (
+				<article class="t-feat-item">
+					<div class="t-feat-head">
+						<span class="t-feat-num">{String(i + 1).padStart(2, "0")}</span>
+						<div class="t-feat-icon">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+								<path d={f.icon} />
+							</svg>
+						</div>
+					</div>
+					<h3 class="t-feat-item-title">{f.title}</h3>
+					<p class="t-feat-item-desc">{f.description}</p>
+				</article>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.t-feat-header {
+		display: grid;
+		grid-template-columns: 200px 1fr;
+		gap: clamp(2rem, 5vw, 5rem);
+		align-items: start;
+		margin-bottom: 3rem;
+	}
+
+	.t-feat-title {
+		font-size: var(--t-h2);
+		max-width: 720px;
+		margin: 0 0 1rem;
+	}
+
+	.t-feat-subtitle {
+		max-width: 640px;
+		margin: 0;
+	}
+
+	.t-feat-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0;
+	}
+
+	.t-feat-item {
+		padding: 3rem 2rem 3rem 0;
+		border-right: 1px solid var(--t-rule-soft);
+		position: relative;
+	}
+
+	.t-feat-item:nth-child(3n) {
+		border-right: none;
+		padding-right: 0;
+	}
+
+	.t-feat-item:not(:nth-child(3n)) {
+		padding-right: 2rem;
+	}
+
+	.t-feat-item:not(:first-child):not(:nth-child(3n + 1)) {
+		padding-left: 2rem;
+	}
+
+	.t-feat-item:nth-child(3n + 1) {
+		padding-left: 0;
+	}
+
+	.t-feat-head {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.t-feat-num {
+		font-family: var(--t-font-display);
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--t-accent);
+		font-variant-numeric: tabular-nums;
+		letter-spacing: 0.02em;
+	}
+
+	.t-feat-icon {
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--t-ink);
+		border: 1px solid var(--t-rule-soft);
+		border-radius: var(--t-radius);
+	}
+
+	.t-feat-item-title {
+		font-family: var(--t-font-display);
+		font-size: 1.5rem;
+		line-height: 1.2;
+		margin: 0 0 0.875rem;
+		color: var(--t-ink);
+	}
+
+	.t-feat-item-desc {
+		font-size: var(--t-body);
+		line-height: 1.65;
+		color: var(--t-ink-soft);
+		margin: 0;
+		max-width: 34ch;
+	}
+
+	@media (max-width: 960px) {
+		.t-feat-header {
+			grid-template-columns: 1fr;
+		}
+		.t-feat-grid {
+			grid-template-columns: 1fr;
+		}
+		.t-feat-item {
+			border-right: none !important;
+			border-bottom: 1px solid var(--t-rule-soft);
+			padding: 2.5rem 0 !important;
+		}
+		.t-feat-item:last-child {
+			border-bottom: none;
+		}
+	}
+</style>

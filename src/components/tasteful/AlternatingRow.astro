@@ -1,0 +1,159 @@
+---
+interface Props {
+	index?: string;
+	eyebrow?: string;
+	title: string;
+	body: string;
+	bullets?: string[];
+	ctaLabel?: string;
+	ctaHref?: string;
+	image: string;
+	imageAlt?: string;
+	reverse?: boolean;
+}
+
+const {
+	index,
+	eyebrow,
+	title,
+	body,
+	bullets = [],
+	ctaLabel,
+	ctaHref = "#",
+	image,
+	imageAlt = "",
+	reverse = false,
+} = Astro.props;
+---
+
+<section class="t-alt">
+	<div class="t-container">
+		<hr class="t-rule" />
+		<div class={`t-alt-grid ${reverse ? "t-alt-reverse" : ""}`}>
+			<div class="t-alt-copy">
+				<div class="t-alt-head">
+					{index && <span class="t-section-number">{index}</span>}
+					{eyebrow && <span class="t-eyebrow">{eyebrow}</span>}
+				</div>
+				<h3 class="t-alt-title">{title}</h3>
+				<p class="t-alt-body">{body}</p>
+				{bullets.length > 0 && (
+					<ul class="t-alt-bullets">
+						{bullets.map((b) => (
+							<li>
+								<span class="t-alt-bullet-mark" aria-hidden="true">—</span>
+								<span>{b}</span>
+							</li>
+						))}
+					</ul>
+				)}
+				{ctaLabel && (
+					<a href={ctaHref} class="t-btn t-btn-ghost-dark">
+						{ctaLabel}
+						<span class="t-btn-arrow">→</span>
+					</a>
+				)}
+			</div>
+			<div class="t-alt-media">
+				<img src={image} alt={imageAlt} loading="lazy" />
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.t-alt {
+		padding: clamp(3.5rem, 6vw, 5.5rem) var(--t-gutter);
+		background: var(--t-cream);
+	}
+
+	.t-alt-grid {
+		display: grid;
+		grid-template-columns: 1.1fr 0.9fr;
+		gap: clamp(2rem, 5vw, 5rem);
+		align-items: start;
+		padding-top: 3rem;
+	}
+
+	.t-alt-reverse {
+		grid-template-columns: 0.9fr 1.1fr;
+	}
+
+	.t-alt-reverse .t-alt-copy {
+		order: 2;
+	}
+
+	.t-alt-head {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.t-alt-title {
+		font-family: var(--t-font-display);
+		font-size: clamp(1.75rem, 3.2vw, 2.625rem);
+		line-height: 1.08;
+		letter-spacing: -0.025em;
+		color: var(--t-ink);
+		margin: 0 0 1.25rem;
+		font-weight: 700;
+		max-width: 18ch;
+	}
+
+	.t-alt-body {
+		font-size: var(--t-lead);
+		line-height: 1.6;
+		color: var(--t-ink-soft);
+		margin: 0 0 1.75rem;
+		max-width: 48ch;
+	}
+
+	.t-alt-bullets {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.t-alt-bullets li {
+		display: flex;
+		gap: 1rem;
+		font-size: var(--t-body);
+		line-height: 1.55;
+		color: var(--t-ink);
+	}
+
+	.t-alt-bullet-mark {
+		color: var(--t-accent);
+		font-family: var(--t-font-display);
+		font-weight: 700;
+		flex-shrink: 0;
+	}
+
+	.t-alt-media {
+		position: relative;
+		overflow: hidden;
+		border-radius: var(--t-radius);
+		border: 1px solid var(--t-rule-soft);
+	}
+
+	.t-alt-media img {
+		display: block;
+		width: 100%;
+		height: auto;
+		filter: saturate(0.9) contrast(1.02);
+	}
+
+	@media (max-width: 860px) {
+		.t-alt-grid,
+		.t-alt-reverse {
+			grid-template-columns: 1fr;
+		}
+		.t-alt-reverse .t-alt-copy {
+			order: 0;
+		}
+	}
+</style>

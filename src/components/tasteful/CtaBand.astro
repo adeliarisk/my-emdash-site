@@ -1,0 +1,116 @@
+---
+interface Props {
+	eyebrow?: string;
+	title: string;
+	subtitle?: string;
+	ctaLabel: string;
+	ctaHref?: string;
+	inverted?: boolean; // cream on navy if true, navy on cream if false
+}
+
+const {
+	eyebrow,
+	title,
+	subtitle,
+	ctaLabel,
+	ctaHref = "#",
+	inverted = true,
+} = Astro.props;
+---
+
+<section class={`t-cta ${inverted ? "t-cta-inverted" : ""}`}>
+	<div class="t-container">
+		<div class="t-cta-grid">
+			<div class="t-cta-meta">
+				{eyebrow && <span class="t-eyebrow">{eyebrow}</span>}
+			</div>
+			<div class="t-cta-body">
+				<h2 class="t-cta-title">{title}</h2>
+				{subtitle && <p class="t-cta-subtitle">{subtitle}</p>}
+				<a
+					href={ctaHref}
+					class={`t-btn ${inverted ? "t-btn-ghost-light" : "t-btn-ghost-dark"}`}
+				>
+					{ctaLabel}
+					<span class="t-btn-arrow">→</span>
+				</a>
+			</div>
+			<div class="t-cta-mark" aria-hidden="true">§</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.t-cta {
+		padding: clamp(4.5rem, 9vw, 8rem) var(--t-gutter);
+		background: var(--t-cream);
+		color: var(--t-ink);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.t-cta-inverted {
+		background: var(--t-navy);
+		color: var(--t-cream);
+	}
+
+	.t-cta-grid {
+		display: grid;
+		grid-template-columns: 200px 1fr auto;
+		gap: clamp(2rem, 5vw, 5rem);
+		align-items: center;
+	}
+
+	.t-cta-body {
+		max-width: 720px;
+	}
+
+	.t-cta-title {
+		font-family: var(--t-font-display);
+		font-size: clamp(2rem, 4.5vw, 3.5rem);
+		line-height: 1.05;
+		letter-spacing: -0.025em;
+		color: inherit;
+		margin: 0 0 1rem;
+		font-weight: 700;
+	}
+
+	.t-cta-inverted .t-cta-title {
+		color: var(--t-cream);
+	}
+
+	.t-cta-subtitle {
+		font-size: var(--t-lead);
+		line-height: 1.55;
+		color: var(--t-ink-soft);
+		margin: 0 0 2rem;
+		max-width: 56ch;
+	}
+
+	.t-cta-inverted .t-cta-subtitle {
+		color: rgba(247, 243, 236, 0.72);
+	}
+
+	.t-cta-inverted .t-eyebrow {
+		color: rgba(247, 243, 236, 0.6);
+	}
+
+	.t-cta-mark {
+		font-family: var(--t-font-display);
+		font-size: clamp(8rem, 18vw, 16rem);
+		line-height: 0.8;
+		color: var(--t-accent);
+		opacity: 0.2;
+		font-weight: 700;
+		user-select: none;
+	}
+
+	@media (max-width: 960px) {
+		.t-cta-grid {
+			grid-template-columns: 1fr;
+		}
+		.t-cta-mark {
+			display: none;
+		}
+	}
+</style>

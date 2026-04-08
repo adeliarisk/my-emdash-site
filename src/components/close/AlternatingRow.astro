@@ -1,0 +1,140 @@
+---
+interface Props {
+	eyebrow?: string;
+	title: string;
+	body: string;
+	bullets?: string[];
+	ctaLabel?: string;
+	ctaHref?: string;
+	image: string;
+	imageAlt?: string;
+	reverse?: boolean;
+	tinted?: boolean;
+}
+
+const {
+	eyebrow,
+	title,
+	body,
+	bullets = [],
+	ctaLabel,
+	ctaHref = "#",
+	image,
+	imageAlt = "",
+	reverse = false,
+	tinted = false,
+} = Astro.props;
+---
+
+<section class={`c-alt ${tinted ? "c-alt-tinted" : ""}`}>
+	<div class={`c-alt-inner close-container ${reverse ? "c-alt-reverse" : ""}`}>
+		<div class="c-alt-media">
+			<img src={image} alt={imageAlt} loading="lazy" />
+		</div>
+		<div class="c-alt-copy">
+			{eyebrow && <span class="close-eyebrow">{eyebrow}</span>}
+			<h3 class="c-alt-title">{title}</h3>
+			<p class="c-alt-body">{body}</p>
+			{bullets.length > 0 && (
+				<ul class="c-alt-bullets">
+					{bullets.map((b) => (
+						<li>
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+								<circle cx="10" cy="10" r="10" fill="#354ff5" fill-opacity="0.12"/>
+								<path d="M6 10l3 3 5-6" stroke="#354ff5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<span>{b}</span>
+						</li>
+					))}
+				</ul>
+			)}
+			{ctaLabel && (
+				<a href={ctaHref} class="close-btn close-btn-primary">
+					{ctaLabel}
+				</a>
+			)}
+		</div>
+	</div>
+</section>
+
+<style>
+	.c-alt {
+		padding: calc(var(--close-section-y) * 0.65) var(--close-gutter);
+		background: var(--close-white);
+	}
+
+	.c-alt-tinted {
+		background: var(--close-surface);
+	}
+
+	.c-alt-inner {
+		display: grid;
+		grid-template-columns: 1fr 1.1fr;
+		gap: clamp(2rem, 5vw, 5rem);
+		align-items: center;
+	}
+
+	.c-alt-reverse .c-alt-media {
+		order: 2;
+	}
+
+	.c-alt-media {
+		border-radius: var(--close-radius-card);
+		overflow: hidden;
+		box-shadow: var(--close-shadow-card);
+	}
+
+	.c-alt-media img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.c-alt-title {
+		font-family: var(--close-font-heading);
+		font-size: clamp(1.625rem, 3vw, 2.25rem);
+		line-height: 1.15;
+		color: var(--close-ink);
+		margin: 0 0 1rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	.c-alt-body {
+		font-size: var(--close-body);
+		line-height: 1.7;
+		color: var(--close-ink-soft);
+		margin: 0 0 1.5rem;
+	}
+
+	.c-alt-bullets {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.c-alt-bullets li {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		font-size: var(--close-body);
+		color: var(--close-ink);
+	}
+
+	.c-alt-bullets svg {
+		flex-shrink: 0;
+		margin-top: 0.15rem;
+	}
+
+	@media (max-width: 860px) {
+		.c-alt-inner {
+			grid-template-columns: 1fr;
+		}
+		.c-alt-reverse .c-alt-media {
+			order: 0;
+		}
+	}
+</style>

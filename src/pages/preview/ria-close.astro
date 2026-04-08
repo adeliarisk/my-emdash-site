@@ -1,0 +1,180 @@
+---
+import Base from "../../layouts/Base.astro";
+import Hero from "../../components/close/Hero.astro";
+import IconFeatureGrid from "../../components/close/IconFeatureGrid.astro";
+import AlternatingRow from "../../components/close/AlternatingRow.astro";
+import StatsRow from "../../components/close/StatsRow.astro";
+import CtaBand from "../../components/close/CtaBand.astro";
+import "../../styles/variant-close.css";
+
+// Shared content — identical between ria-close and ria-tasteful so the
+// two previews are a direct design comparison. Copy lifted verbatim from
+// the migrated services page (adeliarisk.com/ria-cybersecurity-services/).
+
+const clients = [
+	{
+		title: "Wealth Management Firms",
+		body: "SEC-registered investment advisors holding real client assets with thin IT coverage. We build the security program their custodians and regulators expect.",
+		image:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/financial-dashboard-security-risk-compliance.webp",
+		alt: "Team analyzing financial security dashboard showing assets under management, compliance metrics, and risk alerts",
+	},
+	{
+		title: "DoD Contractors",
+		body: "Defense and aerospace suppliers navigating CMMC and NIST 800-171. We translate the controls into an ongoing program, not a one-time audit scramble.",
+		image:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/compliance-regulations-audit-team-business.webp",
+		alt: "Business leader presenting compliance requirements and audit checklist to a team",
+	},
+	{
+		title: "Software and Service Firms Seeking SOC 2",
+		body: "Growing SaaS teams that need a credible SOC 2 report without hiring a full-time CISO. We run the program end to end and make the auditor's job easy.",
+		image:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/security-report-team-soc2-readiness.webp",
+		alt: "Diverse team reviewing security report together, emphasizing trust, compliance, and SOC 2 readiness",
+	},
+	{
+		title: "Healthcare Companies",
+		body: "Covered entities and business associates that have to prove HIPAA compliance without slowing clinical operations. We work alongside your practice managers and IT partners.",
+		image:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/healthcare-secure-login-hipaa-protection.webp",
+		alt: "Healthcare worker using a secure login on tablet to protect patient data and demonstrate HIPAA compliance",
+	},
+];
+
+const reasons = [
+	{
+		icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5",
+		title: "RIA-Specific Expertise",
+		description:
+			"We specialize in SEC-registered investment advisors and wealth management firms. We understand ADV Part 2A, custodian relationships, and what SEC examiners actually look for.",
+	},
+	{
+		icon: "M3 3h18v18H3zM3 9h18M9 21V9",
+		title: "vCISO Model, Not Hourly Billing",
+		description:
+			"A dedicated Virtual CISO for a predictable monthly fee. No surprise invoices. No nickel-and-diming for extra calls. We're available when you need us, not just when the clock is running.",
+	},
+	{
+		icon: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",
+		title: "We Work With Your Team",
+		description:
+			"We're not here to fire your IT provider or second-guess your compliance consultant. We integrate with your existing team and handle the cybersecurity layer they aren't equipped to provide.",
+	},
+];
+
+const results = [
+	{
+		before: "35%",
+		after: "100%",
+		label: "From \"we think we're secure\" to SEC examination ready",
+		description:
+			"One wealth management firm started with 35% of SEC-expected controls documented. After six months of vCISO work, they passed their SEC examination with zero cybersecurity deficiencies cited.",
+	},
+	{
+		before: "247",
+		after: "24",
+		label: "Security holes down to 24",
+		description:
+			"An RIA client had 247 vulnerabilities across their systems, 18 of them critical. We eliminated the critical and high-severity issues first and documented the rest with SEC-ready remediation timelines.",
+	},
+	{
+		before: "28%",
+		after: "4%",
+		label: "Phishing click rate dropped 24 points",
+		description:
+			"Month one: 28% of employees clicked phishing emails. Today: 4% click rate, and 71% actively report suspicious emails instead of ignoring them.",
+	},
+];
+---
+
+<Base
+	title="RIA Cybersecurity Services — Preview (Close)"
+	description="Pixel-close design pass. Content from adeliarisk.com/ria-cybersecurity-services, rendered through a faithful reproduction of the live site's visual language."
+>
+	<div class="variant-close">
+		<Hero
+			eyebrow="For SEC-Registered Advisors"
+			title="RIA Cybersecurity Services for Wealth Management Firms"
+			subtitle="Stop worrying about wire fraud, SEC examinations, and what if something happens to client data. We handle it."
+			ctaLabel="Get Your Free RIA Cybersecurity Assessment"
+			ctaHref="#"
+			secondaryCtaLabel="See How We Work"
+			secondaryCtaHref="#why"
+			image="/_emdash/api/media/file/01KNN0K51ZNMTAVS126TTBEVY3.png"
+			imageAlt="Overview of Adelia Risk RIA cybersecurity services"
+		/>
+
+		<section class="close-section close-section-tinted">
+			<div class="close-container-narrow" style="text-align: center;">
+				<p style="font-size: var(--close-lead); line-height: 1.7; color: var(--close-ink-soft); margin: 0;">
+					Adelia Risk is a cybersecurity firm that handles RIA cybersecurity services for SEC-registered advisors
+					and wealth management firms. We build your security program, manage your tools, and get you
+					examination-ready. We've helped RIAs go from "we think we're secure" to confidently passing SEC
+					examinations without losing their minds (or their clients).
+				</p>
+			</div>
+		</section>
+
+		<IconFeatureGrid
+			eyebrow="Why Firms Choose Adelia"
+			title="An RIA cybersecurity partner, not a vendor"
+			subtitle="Three things that separate us from general-purpose cybersecurity consultants and hourly IT providers."
+			features={reasons}
+			tinted={false}
+		/>
+
+		<AlternatingRow
+			eyebrow="Clients We Typically Serve"
+			title={clients[0].title}
+			body={clients[0].body}
+			image={clients[0].image}
+			imageAlt={clients[0].alt}
+			ctaLabel="Learn more"
+			ctaHref="#"
+			tinted
+		/>
+		<AlternatingRow
+			title={clients[1].title}
+			body={clients[1].body}
+			image={clients[1].image}
+			imageAlt={clients[1].alt}
+			ctaLabel="Learn more"
+			ctaHref="#"
+			reverse
+		/>
+		<AlternatingRow
+			title={clients[2].title}
+			body={clients[2].body}
+			image={clients[2].image}
+			imageAlt={clients[2].alt}
+			ctaLabel="Learn more"
+			ctaHref="#"
+			tinted
+		/>
+		<AlternatingRow
+			title={clients[3].title}
+			body={clients[3].body}
+			image={clients[3].image}
+			imageAlt={clients[3].alt}
+			ctaLabel="Learn more"
+			ctaHref="#"
+			reverse
+		/>
+
+		<StatsRow
+			eyebrow="Proven Results"
+			title="Cybersecurity outcomes our clients actually see"
+			stats={results}
+			dark
+		/>
+
+		<CtaBand
+			eyebrow="Ready When You Are"
+			title="Protect your wealth management firm"
+			subtitle="Book a 30-minute RIA cybersecurity services consultation and we'll show you exactly where you stand and what it would cost to close the gaps."
+			ctaLabel="Book your consultation"
+			ctaHref="#"
+		/>
+	</div>
+</Base>

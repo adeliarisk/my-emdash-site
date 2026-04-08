@@ -1,0 +1,238 @@
+---
+import Base from "../../layouts/Base.astro";
+import Hero from "../../components/tasteful/Hero.astro";
+import IconFeatureGrid from "../../components/tasteful/IconFeatureGrid.astro";
+import AlternatingRow from "../../components/tasteful/AlternatingRow.astro";
+import StatsRow from "../../components/tasteful/StatsRow.astro";
+import CtaBand from "../../components/tasteful/CtaBand.astro";
+import "../../styles/variant-tasteful.css";
+
+// Shared copy with ria-close.astro so the two previews compare directly.
+
+const clients = [
+	{
+		title: "Wealth Management Firms",
+		body: "SEC-registered investment advisors holding real client assets with thin IT coverage. We build the security program their custodians and regulators expect.",
+		image:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/financial-dashboard-security-risk-compliance.webp",
+		alt: "Team analyzing financial security dashboard showing assets under management, compliance metrics, and risk alerts",
+	},
+	{
+		title: "DoD Contractors",
+		body: "Defense and aerospace suppliers navigating CMMC and NIST 800-171. We translate the controls into an ongoing program, not a one-time audit scramble.",
+		image:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/compliance-regulations-audit-team-business.webp",
+		alt: "Business leader presenting compliance requirements and audit checklist to a team",
+	},
+	{
+		title: "Software and Service Firms Seeking SOC 2",
+		body: "Growing SaaS teams that need a credible SOC 2 report without hiring a full-time CISO. We run the program end to end and make the auditor's job easy.",
+		image:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/security-report-team-soc2-readiness.webp",
+		alt: "Diverse team reviewing security report together, emphasizing trust, compliance, and SOC 2 readiness",
+	},
+	{
+		title: "Healthcare Companies",
+		body: "Covered entities and business associates that have to prove HIPAA compliance without slowing clinical operations. We work alongside your practice managers and IT partners.",
+		image:
+			"https://adeliarisk.com/wp-content/uploads/2025/09/healthcare-secure-login-hipaa-protection.webp",
+		alt: "Healthcare worker using a secure login on tablet to protect patient data and demonstrate HIPAA compliance",
+	},
+];
+
+const reasons = [
+	{
+		icon: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5",
+		title: "RIA-Specific Expertise",
+		description:
+			"We specialize in SEC-registered investment advisors and wealth management firms. We understand ADV Part 2A, custodian relationships, and what SEC examiners actually look for.",
+	},
+	{
+		icon: "M3 3h18v18H3zM3 9h18M9 21V9",
+		title: "vCISO Model, Not Hourly Billing",
+		description:
+			"A dedicated Virtual CISO for a predictable monthly fee. No surprise invoices. No nickel-and-diming for extra calls. We're available when you need us, not just when the clock is running.",
+	},
+	{
+		icon: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",
+		title: "We Work With Your Team",
+		description:
+			"We're not here to fire your IT provider or second-guess your compliance consultant. We integrate with your existing team and handle the cybersecurity layer they aren't equipped to provide.",
+	},
+];
+
+// Stats reframed for the editorial layout — value + label
+const results = [
+	{
+		value: "35",
+		unit: "→100%",
+		label: "SEC examination ready",
+		description:
+			"One wealth management firm started with 35% of SEC-expected controls documented. After six months of vCISO work, they passed their SEC examination with zero cybersecurity deficiencies cited.",
+	},
+	{
+		value: "247",
+		unit: "→24",
+		label: "Vulnerabilities resolved",
+		description:
+			"An RIA client had 247 vulnerabilities across their systems, 18 of them critical. We eliminated the critical and high-severity issues first and documented the rest with SEC-ready remediation timelines.",
+	},
+	{
+		value: "24",
+		unit: "pts",
+		label: "Phishing click rate drop",
+		description:
+			"Month one: 28% of employees clicked phishing emails. Today: 4% click rate, and 71% actively report suspicious emails instead of ignoring them.",
+	},
+];
+---
+
+<Base
+	title="RIA Cybersecurity Services — Preview (Tasteful)"
+	description="Editorial design pass. Same content as the live Adelia Risk services page, interpreted through a confident enterprise-trust aesthetic."
+>
+	<div class="variant-tasteful">
+		<Hero
+			meta="For SEC-registered investment advisors and wealth management firms"
+			eyebrow="RIA Cybersecurity Services"
+			title="Cybersecurity that survives an"
+			titleAccent="SEC examination."
+			subtitle="Stop worrying about wire fraud, SEC examinations, and what-if-something-happens-to-client-data. We build the program, manage the tools, and keep you examination-ready — so your team can get back to managing wealth."
+			ctaLabel="Get a free assessment"
+			ctaHref="#"
+			secondaryCtaLabel="See how we work"
+			secondaryCtaHref="#why"
+		/>
+
+		<section class="t-section" style="background: var(--t-cream);">
+			<div class="t-container">
+				<div class="t-intro-grid">
+					<div class="t-intro-meta">
+						<span class="t-eyebrow">About Adelia Risk</span>
+					</div>
+					<div class="t-intro-copy">
+						<p class="t-intro-lead">
+							Adelia Risk is a cybersecurity firm that handles RIA cybersecurity services for SEC-registered
+							advisors and wealth management firms. We build your security program, manage your tools, and get
+							you examination-ready — without losing your mind or your clients in the process.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<IconFeatureGrid
+			eyebrow="— 01 / Why firms choose us"
+			title="An RIA cybersecurity partner, not a vendor."
+			subtitle="Three things that separate us from general-purpose cybersecurity consultants and hourly IT providers."
+			features={reasons}
+		/>
+
+		<section class="t-section" style="background: var(--t-cream); padding-top: 0;">
+			<div class="t-container">
+				<hr class="t-rule" />
+				<div class="t-clients-header">
+					<div class="t-clients-meta">
+						<span class="t-eyebrow">— 02 / Clients we serve</span>
+					</div>
+					<div class="t-clients-intro">
+						<h2 class="t-clients-title">The firms where this work matters most.</h2>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<AlternatingRow
+			index="01 — Wealth Management"
+			title={clients[0].title}
+			body={clients[0].body}
+			image={clients[0].image}
+			imageAlt={clients[0].alt}
+			ctaLabel="Learn more"
+			ctaHref="#"
+		/>
+		<AlternatingRow
+			index="02 — Defense"
+			title={clients[1].title}
+			body={clients[1].body}
+			image={clients[1].image}
+			imageAlt={clients[1].alt}
+			ctaLabel="Learn more"
+			ctaHref="#"
+			reverse
+		/>
+		<AlternatingRow
+			index="03 — SaaS"
+			title={clients[2].title}
+			body={clients[2].body}
+			image={clients[2].image}
+			imageAlt={clients[2].alt}
+			ctaLabel="Learn more"
+			ctaHref="#"
+		/>
+		<AlternatingRow
+			index="04 — Healthcare"
+			title={clients[3].title}
+			body={clients[3].body}
+			image={clients[3].image}
+			imageAlt={clients[3].alt}
+			ctaLabel="Learn more"
+			ctaHref="#"
+			reverse
+		/>
+
+		<StatsRow
+			eyebrow="— 03 / Results"
+			title="Outcomes our clients actually see."
+			subtitle="Not marketing numbers — three representative engagements and where they landed."
+			stats={results}
+			dark
+		/>
+
+		<CtaBand
+			eyebrow="— 04 / Next step"
+			title="Book the consultation."
+			subtitle="Thirty minutes. We'll tell you exactly where you stand and what it would cost to close the gaps — even if that means telling you to stay with your current provider."
+			ctaLabel="Start the conversation"
+			ctaHref="#"
+			inverted
+		/>
+	</div>
+</Base>
+
+<style is:global>
+	.variant-tasteful .t-intro-grid,
+	.variant-tasteful .t-clients-header {
+		display: grid;
+		grid-template-columns: 200px 1fr;
+		gap: clamp(2rem, 5vw, 5rem);
+		align-items: start;
+		padding-top: 3rem;
+	}
+
+	.variant-tasteful .t-intro-lead {
+		font-family: var(--t-font-display);
+		font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+		line-height: 1.35;
+		color: var(--t-ink);
+		margin: 0;
+		max-width: 56ch;
+		font-weight: 500;
+	}
+
+	.variant-tasteful .t-clients-title {
+		font-family: var(--t-font-display);
+		font-size: var(--t-h2);
+		line-height: 1.05;
+		letter-spacing: -0.025em;
+		margin: 0;
+		max-width: 18ch;
+	}
+
+	@media (max-width: 960px) {
+		.variant-tasteful .t-intro-grid,
+		.variant-tasteful .t-clients-header {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
