@@ -276,6 +276,7 @@ const pageCtx = createPublicPageContext({
 				-webkit-font-smoothing: antialiased;
 				-moz-osx-font-smoothing: grayscale;
 				min-height: 100vh;
+				overflow-x: hidden;
 			}
 
 			img {
@@ -295,6 +296,8 @@ const pageCtx = createPublicPageContext({
 				font-weight: 700;
 				letter-spacing: var(--tracking-snug);
 				color: var(--color-text);
+				overflow-wrap: break-word;
+				word-wrap: break-word;
 			}
 
 			h1 {

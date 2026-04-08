@@ -123,12 +123,15 @@ const {
 
 	.c-hero-title {
 		font-family: var(--font-heading);
-		font-size: clamp(2.25rem, 4.2vw, 3.4rem);
+		font-size: clamp(1.5rem, 5.5vw, 3.4rem);
 		line-height: 1.1;
 		letter-spacing: -0.02em;
 		color: var(--color-on-accent);
 		margin: 0 0 1.25rem;
 		font-weight: 700;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		hyphens: auto;
 	}
 
 	.c-hero-subtitle {
@@ -167,6 +170,21 @@ const {
 		.c-hero-image {
 			max-width: 520px;
 			margin: 0 auto;
+		}
+	}
+
+	@media (max-width: 540px) {
+		.c-hero-title {
+			font-size: 1.75rem !important;
+		}
+		.c-hero-subtitle {
+			font-size: 1rem !important;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.c-hero-title {
+			font-size: 1.5rem !important;
 		}
 	}
 </style>
