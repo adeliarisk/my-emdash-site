@@ -11,14 +11,17 @@ adeliarisk.com originals. Light-only. Customize the theme as needed.
 
 Both pages now look legitimately close to the live adeliarisk.com
 versions. I went from "recognizable Adelia Risk vibe" to "this is
-pretty close to the real page" on both.
+pretty close to the real page" on both. And I ended up building the
+homepage too as a bonus.
 
 **Three URLs to look at this morning:**
 
-1. https://my-emdash-site.josh-ablett.workers.dev/ — homepage (still
-   the generic blog index; I didn't touch it)
+1. https://my-emdash-site.josh-ablett.workers.dev/ — **new** Adelia
+   Risk-style homepage with hero, trust bar (real grayscale logos),
+   What We Offer cards, 4 industry alternating rows, About Josh
+   section with your real headshot, CTA bands, and Latest Posts
 2. https://my-emdash-site.josh-ablett.workers.dev/pages/ria-cybersecurity-services
-   — the RIA services page
+   — the RIA services page, all sixteen sections
 3. https://my-emdash-site.josh-ablett.workers.dev/posts/how-online-banking-security-protects-your-accounts
    — the banking security blog post
 
@@ -255,11 +258,38 @@ src/pages/preview/              (deleted — canonical URL has the content now)
 MORNING-REPORT.md               (this file)
 ```
 
+### 9. Homepage (bonus)
+
+`src/pages/index.astro` was the old EmDash blog index. Replaced it
+with a real Adelia Risk-style homepage that mirrors the live
+adeliarisk.com home section-for-section using components I already
+had:
+
+- **Hero**: centered "Expert Fractional & Virtual CISO Solutions"
+  with your real subtitle and a "Learn about our vCISO services" CTA
+- **Trust bar**: Real grayscale logos for SFSA, Jentner, Physician
+  Capital, Parsons — hot-linked from adeliarisk.com
+- **What We Offer**: Three tinted feature cards with illustrated
+  icons (Security Compliance / Advanced Threat Protection /
+  Flexible Expertise) and verbatim copy
+- **In-Demand Expertise**: "Fractional CISO and vCISO Clients We
+  Typically Serve" header + four alternating image+text rows
+  (Wealth Management Firms, DoD Contractors, Software and Service
+  Firms Seeking SOC 2, Healthcare Companies). Photos hot-linked
+  from adeliarisk.com, copy verbatim.
+- **About Josh Ablett**: AlternatingRow with your real headshot and
+  bio ("skilled cybersecurity expert with over fourteen years of
+  experience… background as a senior leader at the Royal Bank of
+  Scotland…")
+- **Need something else?** CTA band
+- **Latest Posts**: live CMS content via `getEmDashCollection`
+- **Do you think we might be a good match?** Final CTA band
+
 ## What I did NOT do
 
-- Did not touch the homepage at `/`
-- Did not touch the `/posts` archive, `/category/*`, `/tag/*`, `/search`,
-  `/404`, or the RSS feed — they still use the old EmDash template
+- Did not touch the `/posts` archive, `/category/*`, `/tag/*`,
+  `/search`, `/404`, or the RSS feed — they still use the old EmDash
+  template
 - Did not attach taxonomy terms to the post entry in D1 (CLI
   limitation — used the override map instead)
 - Did not create a real byline in EmDash for Josh Ablett (same
@@ -274,18 +304,17 @@ MORNING-REPORT.md               (this file)
 
 In rough order of impact:
 
-1. **Homepage**: build a real Adelia Risk–style homepage to match
-   the root URL. Hero + Trusted by logos + What We Offer cards +
-   Clients We Typically Serve alternating rows + About Josh + Latest
-   posts + Final CTA band. Uses most of the components I already built.
-2. **Header**: rebuild SiteHeader as the floating rounded pill shape
+1. **Header**: rebuild SiteHeader as the floating rounded pill shape
    the source uses. Add a real mobile menu drawer.
-3. **Finish the post polish**: tweak body typography spacing to
+2. **Finish the post polish**: tweak body typography spacing to
    match source margins exactly, fix the first-paragraph "lead"
    treatment, make the form CTAs actually submit to MailerLite.
-4. **Other migrated content**: migrate a few more pages (About,
+3. **Other migrated content**: migrate a few more pages (About,
    Virtual CISO Service, CMMC Consulting) so the nav links go
    somewhere real.
+4. **Homepage polish**: the hero needs an image treatment on the
+   right side (the source has a subtle graphic element). Trust bar
+   could use real logos from more than four companies.
 5. **TTFB fix**: dig into EmDash middleware to understand why
    `Astro.cache.set(cacheHint)` isn't producing Cache-Control
    headers on the response. If fixable, this would drop TTFB from
@@ -296,6 +325,8 @@ In rough order of impact:
 ## Git history
 
 ```
+447d754 Bonus: rebuild homepage to match adeliarisk.com hero + sections
+2e0b290 Morning report: overnight theme pass summary
 408bba2 Remove extra eyebrow labels and simplify SEC section layout
 fa80bae Mobile responsive fixes and body overflow safety
 6e699c2 Rework post hero and refine gradient/pattern across dark sections
@@ -305,6 +336,6 @@ ced3405 Visual polish pass: match source section backgrounds and comparison layo
 
 Everything pushed to `main` on `origin`. Built and deployed to the
 production Worker at each step. The current live version is
-`408bba2`.
+`447d754`.
 
 Sleep was not, in fact, required.
