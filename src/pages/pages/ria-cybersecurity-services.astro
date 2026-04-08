@@ -128,8 +128,9 @@ const results = [
 		label: 'From "We Think We\'re Secure" to SEC Examination Ready',
 		description:
 			"This wealth management firm started with only 35% of SEC-expected security controls documented. Month by month, our vCISO RIA security team implemented controls, configured security tools, and built their documentation. By month 6, all policies were written, tested, and maintained. Result: passed their SEC examination with zero RIA cybersecurity deficiencies cited.",
+		// 768w variant — native 2196px is overkill for a ~400px stat card (saves ~83KB)
 		chart:
-			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-sec-compliance-improvement-chart.png",
+			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-sec-compliance-improvement-chart-768x527.png",
 	},
 	{
 		before: "247",
@@ -137,8 +138,9 @@ const results = [
 		label: "247 Security Holes Down to 24",
 		description:
 			"This RIA had 247 vulnerabilities across their systems. 18 of them were critical. Any one could have been the entry point for wire fraud or data theft. Our cybersecurity for RIAs prioritized the critical and high-severity issues first, implementing fixes while documenting Plans of Action for the rest. Result: all critical vulnerabilities eliminated.",
+		// 768w variant (saves ~32KB)
 		chart:
-			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-cybersecurity-vulnerability-reduction.png",
+			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-cybersecurity-vulnerability-reduction-768x619.png",
 	},
 	{
 		before: "28%",
@@ -146,8 +148,9 @@ const results = [
 		label: "Your Biggest Risk: Your Own Team",
 		description:
 			"Month 1: 28% of employees clicked phishing emails. That's the #1 way wire fraud starts. Today: 4% click rate. More importantly, 71% now actively report suspicious emails instead of ignoring them. The SEC expects security awareness training. Our RIA cybersecurity services make it stick.",
+		// 768w variant — was already -1024x910, drop to -768x683 (saves ~39KB)
 		chart:
-			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-employee-phishing-test-results-1024x910.png",
+			"https://adeliarisk.com/wp-content/uploads/2026/02/ria-employee-phishing-test-results-768x683.png",
 	},
 ];
 
@@ -352,7 +355,8 @@ const cities = [
 		listTitle="You Have Everything Hackers Want"
 		items={hackersWant}
 		footer="A single successful RIA cyberattack can yield more than dozens of attacks on regular businesses. Hackers know this."
-		backgroundImage="https://adeliarisk.com/wp-content/uploads/2026/02/ChatGPT-Image-Jun-16-2025-10_41_43-AM-1.jpg"
+		{/* 300w variant — native 422px is small enough but the full file is still 188KB; -300x286 is 17KB */}
+		backgroundImage="https://adeliarisk.com/wp-content/uploads/2026/02/ChatGPT-Image-Jun-16-2025-10_41_43-AM-1-300x286.jpg"
 	/>
 
 	<ComparisonBlock
