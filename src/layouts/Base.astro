@@ -149,17 +149,21 @@ const pageCtx = createPublicPageContext({
 					#3a1fdb 45%,
 					#b818e0 100%
 				);
+				/* Dark gradient used for heroes and dark bands. Tuned to
+				 * match the live adeliarisk.com hero: deep navy sliding
+				 * into a bright royal/electric blue, with a soft radial
+				 * highlight in the top-right for depth. */
 				--gradient-hero: radial-gradient(
 						ellipse at top right,
-						rgba(53, 79, 245, 0.45) 0%,
-						transparent 50%
+						rgba(83, 56, 245, 0.35) 0%,
+						transparent 55%
 					),
 					radial-gradient(
 						ellipse at bottom left,
-						rgba(210, 32, 255, 0.25) 0%,
-						transparent 50%
+						rgba(210, 32, 255, 0.12) 0%,
+						transparent 55%
 					),
-					linear-gradient(135deg, #0a1a2d 0%, #12263a 50%, #1a3151 100%);
+					linear-gradient(135deg, #0b1e3d 0%, #162b5d 35%, #2740cd 100%);
 
 				/* Typography */
 				--font-sans:
