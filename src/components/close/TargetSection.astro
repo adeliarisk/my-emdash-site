@@ -21,100 +21,61 @@ const {
 ---
 
 <section class="c-target ar-section">
-	<div class="c-target-bg" aria-hidden="true"></div>
-	{backgroundImage && (
-		<div class="c-target-photo" aria-hidden="true">
-			<img src={backgroundImage} alt="" loading="lazy" />
-		</div>
-	)}
-	<div class="c-target-inner ar-container">
-		<div class="c-target-copy">
+	<div class="ar-container">
+		<header class="c-target-header">
 			{eyebrow && <span class="ar-eyebrow">{eyebrow}</span>}
 			<h2 class="c-target-title">{title}</h2>
 			<p class="c-target-body">{body}</p>
+		</header>
+
+		<div class="c-target-grid">
+			{backgroundImage && (
+				<div class="c-target-photo-wrap">
+					<img
+						src={backgroundImage}
+						alt="Cybersecurity monitoring illustration"
+						loading="lazy"
+					/>
+					<div class="c-target-photo-tint" aria-hidden="true"></div>
+				</div>
+			)}
+			<aside class="c-target-card">
+				<h3 class="c-target-list-title">{listTitle}</h3>
+				<ul class="c-target-list">
+					{items.map((item) => (
+						<li>
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+								<rect x="1" y="1" width="18" height="18" rx="4" fill="#354ff5" fill-opacity="0.12" stroke="#354ff5" stroke-width="1.5"/>
+								<path d="M6 10l3 3 5-6" stroke="#354ff5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<span>{item}</span>
+						</li>
+					))}
+				</ul>
+			</aside>
 		</div>
-		<div class="c-target-card">
-			<h3 class="c-target-list-title">{listTitle}</h3>
-			<ul class="c-target-list">
-				{items.map((item) => (
-					<li>
-						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-							<circle cx="10" cy="10" r="10" fill="rgba(255,255,255,0.12)"/>
-							<path d="M6 10l3 3 5-6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-						<span>{item}</span>
-					</li>
-				))}
-			</ul>
-			{footer && <p class="c-target-footer">{footer}</p>}
-		</div>
+
+		{footer && <p class="c-target-footer">{footer}</p>}
 	</div>
 </section>
 
 <style>
 	.c-target {
-		position: relative;
-		color: var(--color-on-accent);
-		overflow: hidden;
+		background: var(--color-bg);
 	}
 
-	.c-target-bg {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-		background: var(--gradient-hero);
-	}
-
-	.c-target-bg::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
-		background-size: 28px 28px;
-	}
-
-	.c-target-photo {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-		overflow: hidden;
-		opacity: 0.35;
-		mix-blend-mode: luminosity;
-	}
-
-	.c-target-photo img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		object-position: center right;
-	}
-
-	.c-target-photo::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(90deg, #0a1a2d 25%, rgba(10, 26, 45, 0.85) 50%, rgba(10, 26, 45, 0.7) 100%);
-	}
-
-	.c-target-inner {
-		position: relative;
-		z-index: 1;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: clamp(2rem, 5vw, 5rem);
-		align-items: center;
-	}
-
-	.c-target-copy :global(.ar-eyebrow) {
-		color: #8faaff;
+	.c-target-header {
+		text-align: center;
+		max-width: 760px;
+		margin: 0 auto 3rem;
 	}
 
 	.c-target-title {
 		font-family: var(--font-heading);
-		font-size: clamp(1.75rem, 3.2vw, 2.625rem);
+		font-size: clamp(1.75rem, 3vw, 2.625rem);
 		line-height: 1.15;
 		letter-spacing: -0.02em;
-		color: var(--color-on-accent);
+		color: var(--color-text);
 		margin: 0 0 1.25rem;
 		font-weight: 700;
 	}
@@ -122,63 +83,100 @@ const {
 	.c-target-body {
 		font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
 		line-height: 1.65;
-		color: rgba(255, 255, 255, 0.82);
+		color: var(--color-text-secondary);
 		margin: 0;
 	}
 
+	.c-target-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: clamp(2rem, 4vw, 4rem);
+		align-items: center;
+		max-width: 1100px;
+		margin: 0 auto;
+	}
+
+	.c-target-photo-wrap {
+		position: relative;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		aspect-ratio: 4 / 3;
+		box-shadow: var(--shadow-card);
+	}
+
+	.c-target-photo-wrap img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.c-target-photo-tint {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(135deg, rgba(18, 38, 58, 0.45) 0%, rgba(28, 54, 223, 0.35) 100%);
+		mix-blend-mode: multiply;
+		pointer-events: none;
+	}
+
 	.c-target-card {
-		background: rgba(255, 255, 255, 0.06);
-		border: 1px solid rgba(255, 255, 255, 0.15);
+		background: var(--color-bg-subtle);
+		border: 1px solid var(--color-border-subtle);
 		border-radius: var(--radius-lg);
 		padding: clamp(2rem, 3vw, 2.75rem);
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
 	}
 
 	.c-target-list-title {
 		font-family: var(--font-heading);
-		font-size: 1.375rem;
-		color: var(--color-on-accent);
-		margin: 0 0 1.25rem;
+		font-size: 1.5rem;
+		color: var(--color-text);
+		margin: 0 0 1.5rem;
 		font-weight: 700;
 	}
 
 	.c-target-list {
 		list-style: none;
 		padding: 0;
-		margin: 0 0 1.5rem;
+		margin: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 0.875rem;
+		gap: 1rem;
 	}
 
 	.c-target-list li {
 		display: flex;
 		align-items: flex-start;
-		gap: 0.75rem;
-		font-size: 1.0625rem;
+		gap: 0.875rem;
+		font-size: 1rem;
 		line-height: 1.5;
-		color: rgba(255, 255, 255, 0.92);
+		color: var(--color-text);
 	}
 
 	.c-target-list svg {
 		flex-shrink: 0;
-		margin-top: 0.15rem;
+		margin-top: 0.125rem;
 	}
 
 	.c-target-footer {
-		font-size: 0.9375rem;
-		line-height: 1.6;
-		color: rgba(255, 255, 255, 0.72);
+		max-width: 760px;
+		margin: 3rem auto 0;
+		text-align: center;
+		font-size: 1rem;
+		line-height: 1.65;
+		color: var(--color-text-secondary);
 		font-style: italic;
-		margin: 0;
-		padding-top: 1.25rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.15);
 	}
 
-	@media (max-width: 860px) {
-		.c-target-inner {
+	@media (max-width: 880px) {
+		.c-target-grid {
 			grid-template-columns: 1fr;
+		}
+		.c-target-photo-wrap {
+			max-width: 480px;
+			margin: 0 auto;
+			aspect-ratio: 16 / 10;
 		}
 	}
 </style>
