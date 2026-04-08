@@ -10,29 +10,25 @@ interface Props {
 const { eyebrow, title, paragraphs, listTitle, items } = Astro.props;
 ---
 
-<section class="c-sec ar-section ar-section-tinted">
+<section class="c-sec ar-section">
 	<div class="ar-container">
+		<header class="c-sec-header">
+			{eyebrow && <span class="ar-eyebrow">{eyebrow}</span>}
+			<h2 class="c-sec-title">{title}</h2>
+		</header>
 		<div class="c-sec-grid">
-			<div class="c-sec-copy">
-				{eyebrow && <span class="ar-eyebrow">{eyebrow}</span>}
-				<h2 class="c-sec-title">{title}</h2>
+			<div class="c-sec-copy-card">
 				{paragraphs.map((p) => (
 					<p class="c-sec-body">{p}</p>
 				))}
 			</div>
-			<aside class="c-sec-card">
-				<div class="c-sec-card-icon" aria-hidden="true">
-					<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<path d="M12 2l9 4v6c0 5-3.8 9.3-9 11-5.2-1.7-9-6-9-11V6l9-4z" />
-						<path d="M9 12l2 2 4-4" />
-					</svg>
-				</div>
+			<aside class="c-sec-list-card">
 				<h3 class="c-sec-card-title">{listTitle}</h3>
 				<ul class="c-sec-list">
 					{items.map((item) => (
 						<li>
-							<svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-								<circle cx="10" cy="10" r="10" fill="#354ff5" fill-opacity="0.12"/>
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+								<rect x="1" y="1" width="18" height="18" rx="4" fill="#354ff5" fill-opacity="0.1" stroke="#354ff5" stroke-width="1.5"/>
 								<path d="M6 10l3 3 5-6" stroke="#354ff5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 							</svg>
 							<span>{item}</span>
@@ -45,11 +41,14 @@ const { eyebrow, title, paragraphs, listTitle, items } = Astro.props;
 </section>
 
 <style>
-	.c-sec-grid {
-		display: grid;
-		grid-template-columns: 1.1fr 1fr;
-		gap: clamp(2rem, 5vw, 5rem);
-		align-items: start;
+	.c-sec {
+		background: var(--color-bg);
+	}
+
+	.c-sec-header {
+		text-align: center;
+		max-width: 760px;
+		margin: 0 auto 3rem;
 	}
 
 	.c-sec-title {
@@ -58,8 +57,27 @@ const { eyebrow, title, paragraphs, listTitle, items } = Astro.props;
 		line-height: 1.15;
 		letter-spacing: -0.02em;
 		color: var(--color-text);
-		margin: 0 0 1.25rem;
+		margin: 0;
 		font-weight: 700;
+	}
+
+	.c-sec-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: clamp(1.25rem, 2vw, 2rem);
+		align-items: stretch;
+		max-width: 1100px;
+		margin: 0 auto;
+	}
+
+	.c-sec-copy-card {
+		background: var(--color-bg-tint);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-lg);
+		padding: clamp(2rem, 3vw, 2.75rem);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
 	.c-sec-body {
@@ -73,32 +91,25 @@ const { eyebrow, title, paragraphs, listTitle, items } = Astro.props;
 		margin-bottom: 0;
 	}
 
-	.c-sec-card {
-		background: var(--color-bg);
-		border-radius: var(--radius-lg);
-		padding: 2.5rem 2.25rem;
-		box-shadow: var(--shadow-card);
-		position: relative;
+	.c-sec-body :global(a) {
+		color: var(--color-blue);
+		font-weight: 500;
+		border-bottom: 2px solid currentColor;
 	}
 
-	.c-sec-card-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 64px;
-		height: 64px;
-		border-radius: 16px;
-		background: var(--gradient-cta);
-		color: var(--color-on-accent);
-		margin-bottom: 1.5rem;
-		box-shadow: var(--shadow-cta);
+	.c-sec-list-card {
+		background: var(--color-bg);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: var(--radius-lg);
+		padding: clamp(2rem, 3vw, 2.75rem);
+		box-shadow: var(--shadow-card);
 	}
 
 	.c-sec-card-title {
 		font-family: var(--font-heading);
 		font-size: 1.375rem;
 		color: var(--color-text);
-		margin: 0 0 1.25rem;
+		margin: 0 0 1.5rem;
 		font-weight: 700;
 	}
 
@@ -108,13 +119,13 @@ const { eyebrow, title, paragraphs, listTitle, items } = Astro.props;
 		margin: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 0.875rem;
+		gap: 1rem;
 	}
 
 	.c-sec-list li {
 		display: flex;
 		align-items: flex-start;
-		gap: 0.75rem;
+		gap: 0.875rem;
 		font-size: 1rem;
 		line-height: 1.5;
 		color: var(--color-text);
