@@ -3,12 +3,16 @@ import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-// Self-hosted fonts — latin subset only keeps the CSS small.
-import "@fontsource/roboto/latin-400.css";
-import "@fontsource/roboto/latin-500.css";
-import "@fontsource/roboto/latin-700.css";
-import "@fontsource/roboto-slab/latin-500.css";
-import "@fontsource/roboto-slab/latin-700.css";
+// Self-hosted fonts — Inter across the board to match adeliarisk.com.
+// The source Elementor kit sets font-family: "Inter" at the root and
+// everything inherits it; headings are the same family at weight 700,
+// and some .single_content h2 rules use weight 900. Latin subset only
+// to keep the CSS small.
+import "@fontsource/inter/latin-400.css";
+import "@fontsource/inter/latin-500.css";
+import "@fontsource/inter/latin-600.css";
+import "@fontsource/inter/latin-700.css";
+import "@fontsource/inter/latin-900.css";
 import "../styles/theme.css";
 
 interface Props {
@@ -165,12 +169,16 @@ const pageCtx = createPublicPageContext({
 					),
 					linear-gradient(135deg, #0b1e3d 0%, #162b5d 35%, #2740cd 100%);
 
-				/* Typography */
+				/* Typography — Inter everywhere to match adeliarisk.com.
+				 * --font-heading is kept as a separate token so it can be
+				 * re-pointed to a display face later without touching every
+				 * component, but right now it resolves to Inter. */
 				--font-sans:
-					"Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
+					"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
 					"Helvetica Neue", Arial, sans-serif;
 				--font-heading:
-					"Roboto Slab", Georgia, "Times New Roman", serif;
+					"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+					"Helvetica Neue", Arial, sans-serif;
 				--font-mono:
 					ui-monospace, SFMono-Regular, Menlo, monospace;
 

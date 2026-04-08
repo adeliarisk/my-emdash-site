@@ -84,8 +84,8 @@ const { eyebrow, title, subtitle, stats, dark = false } = Astro.props;
 
 	.c-stats-title {
 		font-family: var(--font-heading);
-		font-size: clamp(1.75rem, 3vw, 2.625rem);
-		line-height: 1.15;
+		font-size: clamp(1.75rem, 3.3vw, 2.8125rem); /* 28 → 45px — matches source H2 */
+		line-height: 1.12;
 		letter-spacing: -0.02em;
 		color: inherit;
 		margin: 0 0 1rem;
@@ -239,8 +239,8 @@ const { eyebrow, title, subtitle, stats, dark = false } = Astro.props;
 
 	.c-stats-label {
 		font-family: var(--font-heading);
-		font-size: 1.25rem;
-		line-height: 1.3;
+		font-size: 1.5rem; /* 24px */
+		line-height: 1.25;
 		color: inherit;
 		margin: 0 0 0.625rem;
 		font-weight: 700;
